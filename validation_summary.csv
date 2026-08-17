@@ -1,0 +1,29 @@
+category,metric,value,unit,interpretation
+dataset,development_symbols,100,symbols,Combined development dataset used for technical-edge research
+dataset,development_observations,108234,observations,Combined historical development observations
+dataset,kospi_observations,32070,observations,KOSPI subset
+dataset,kosdaq_observations,25656,observations,KOSDAQ subset
+dataset,us_tech_observations,28548,observations,US technology subset
+dataset,us_non_tech_observations,21960,observations,US non-technology subset
+external_validation,unseen_symbols,50,symbols,Completely non-overlapping unseen universe
+external_validation,unseen_observations,54030,observations,External-validation observations
+external_validation,overlap_with_development,0,symbols,No symbol overlap with prior universe
+external_validation,overall_verdict,NOT_VALIDATED,status,Overall Technical Edge did not meet the predefined external-validation bar
+external_validation,kosdaq_effect,KOSDAQ_EFFECT_REPLICATED,status,KOSDAQ effect replicated in the expanded unseen universe
+risk_validation,verdict,PASS,status,Risk ordering remained monotonic across downside metrics
+calibration,candidate_a,REJECT,status,Candidate did not satisfy the predefined improvement criteria
+calibration,candidate_b,REJECT,status,Candidate did not satisfy the predefined improvement criteria
+calibration,candidate_c,REJECT,status,Best mean-return candidate still failed median/equal-weight/tail-dependency criteria
+calibration,production_threshold_change,NONE,status,65/80 Technical Edge thresholds were not changed
+robustness,edge65_20d_nonoverlap,1.328,percentage_points,Historical robustness dataset mean excess return
+robustness,edge65_60d_nonoverlap,3.127,percentage_points,Historical robustness dataset mean excess return
+robustness,edge80_20d_nonoverlap,0.773,percentage_points,Historical robustness dataset mean excess return
+robustness,edge80_60d_nonoverlap,2.685,percentage_points,Historical robustness dataset mean excess return
+risk_validation,low_risk_nmae,5.95,percent,Historical robustness dataset
+risk_validation,medium_risk_nmae,9.25,percent,Historical robustness dataset
+risk_validation,high_risk_nmae,10.32,percent,Historical robustness dataset
+risk_validation,low_risk_realized_volatility,28.97,percent,Historical robustness dataset
+risk_validation,medium_risk_realized_volatility,49.08,percent,Historical robustness dataset
+risk_validation,high_risk_realized_volatility,68.84,percent,Historical robustness dataset
+engineering,v26_pytest,340,tests,Passing regression tests at v2.6 completion
+engineering,v26_subtests,20,subtests,Additional subtests at v2.6 completion
