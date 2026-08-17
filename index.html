@@ -3,50 +3,333 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AI STOCK BRIEF v2.6 - 국내외 주식 정량분석, 자동 모닝 브리핑, 기술신호 변화 감지, 백테스트·강건성·외부검증을 거친 텔레그램 주식 브리핑 프로젝트">
+<meta name="description" content="AI STOCK BRIEF v2.6 - 국내외 주식 정량분석, 모닝 브리핑, 기술신호 변화 감지와 단계별 데이터 검증을 결합한 텔레그램 주식 브리핑 프로젝트">
 <meta name="theme-color" content="#0f172a">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://fixie-aibot.github.io/ai-stock-brief/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="AI STOCK BRIEF">
-<meta property="og:title" content="AI STOCK BRIEF v2.6 | 검증 중심 주식 브리핑">
-<meta property="og:description" content="100종목·108,234개 관측치, unseen 50종목 외부검증, bootstrap·non-overlap·equal-weight 검증까지. 좋은 결과만 남기지 않는 검증 중심 AI 주식 브리핑.">
+<meta property="og:title" content="AI STOCK BRIEF v2.6 | 검증 기반 주식 브리핑">
+<meta property="og:description" content="100종목·108,234개 개발 관측치, 비중복 50종목 외부검증, Bootstrap·Non-overlap·Equal-weight·Calibration 후보 기각까지. 결과보다 검증 절차를 우선하는 주식 분석 프로젝트입니다.">
 <meta property="og:url" content="https://fixie-aibot.github.io/ai-stock-brief/">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AI STOCK BRIEF v2.6 | 검증 중심 주식 브리핑">
-<meta name="twitter:description" content="Python 정량분석 + AI 해석 + 자동 모닝 브리핑 + 기술신호 변화 감지. 백테스트와 외부검증 결과까지 투명하게 공개합니다.">
+<meta name="twitter:title" content="AI STOCK BRIEF v2.6 | 검증 기반 주식 브리핑">
+<meta name="twitter:description" content="Python 정량분석 + AI 해석 + 자동 브리핑. 백테스트, 강건성, 외부검증, Calibration 과정을 투명하게 정리합니다.">
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%230f172a"/><path d="M14 42 24 32l8 7 17-19" fill="none" stroke="%2360a5fa" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>'>
-<title>AI STOCK BRIEF v2.6 | 검증 중심 주식 브리핑</title>
+<title>AI STOCK BRIEF v2.6 | 검증 기반 주식 브리핑</title>
 <style>
-:root{--ink:#0f172a;--text:#1f2937;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--blue2:#1d4ed8;--green:#059669;--amber:#d97706;--red:#dc2626;--violet:#7c3aed;--bg:#f4f7fb;--card:#fff;--soft:#f8fafc}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:"Malgun Gothic","Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.72}a{color:inherit}.page{max-width:1080px;margin:auto;padding:28px 18px 64px}.hero{background:linear-gradient(135deg,#0f172a 0%,#172554 60%,#1e3a8a 100%);color:#fff;padding:50px 40px;border-radius:24px;box-shadow:0 22px 55px rgba(15,23,42,.17)}.hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{font-size:13px;font-weight:900;letter-spacing:.09em;color:#bfdbfe}.status{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.17);color:#dbeafe}.dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 0 3px rgba(52,211,153,.13)}.hero h1{font-size:40px;line-height:1.26;margin:14px 0 12px;letter-spacing:-.02em}.hero p{font-size:17px;color:#dbe4f0;margin:0;max-width:860px}.hero-emphasis{margin-top:18px;padding:15px 17px;border-radius:12px;background:rgba(37,99,235,.18);border:1px solid rgba(147,197,253,.25);color:#eff6ff;font-weight:700}.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.pill{font-size:12px;font-weight:800;color:#dbeafe;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}.btn{display:inline-block;padding:12px 18px;border-radius:9px;text-decoration:none;font-weight:900;transition:.15s ease;border:0}.btn:hover{transform:translateY(-1px);filter:brightness(.98)}.primary{background:#2563eb;color:#fff}.secondary{background:#fff;color:#111827}.ghost{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}.nav{position:sticky;top:10px;z-index:20;display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;padding:12px 16px;background:rgba(255,255,255,.96);border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 6px 20px rgba(15,23,42,.05);backdrop-filter:blur(8px)}.nav a{text-decoration:none;font-size:14px;font-weight:800;color:#475569;white-space:nowrap}.nav a:hover{color:#2563eb}.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:20px}.q{background:#fff;border:1px solid #e5e7eb;border-radius:13px;padding:18px;box-shadow:0 5px 18px rgba(15,23,42,.03)}.q strong{display:block;color:#0f172a;margin-bottom:5px}.q span{font-size:13px;color:#64748b}.card{scroll-margin-top:84px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:30px;margin-top:20px}.card h2{font-size:26px;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #2563eb;letter-spacing:-.015em}.card h3{font-size:19px;margin:26px 0 8px;color:#0f172a}.lead{color:#475569;margin-top:-2px;font-size:15px}.notice{padding:18px 20px;margin:18px 0;background:#eff6ff;border-left:5px solid #2563eb;border-radius:2px 10px 10px 2px}.good{background:#ecfdf5;border-left-color:#059669}.warn{background:#fffbeb;border-left-color:#d97706}.danger{background:#fef2f2;border-left-color:#dc2626}.violet{background:#f5f3ff;border-left-color:#7c3aed}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.metric{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:18px}.metric strong{display:block;font-size:22px;color:#0f172a;line-height:1.2}.metric span{font-size:13px;color:#64748b}.metric .tiny{font-size:11px;margin-top:5px;display:block;color:#94a3b8}.core{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.core>div{border:1px solid #e2e8f0;border-radius:11px;padding:18px;background:#f8fafc}.core strong{display:block;font-size:17px;margin-bottom:5px}.blue{color:#1d4ed8}.orange{color:#b45309}.green{color:#047857}.flow{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding:4px 1px 10px}.flow-item{min-width:142px;flex:1;border:1px solid #dbe4ea;background:#f8fafc;border-radius:11px;padding:14px}.flow-item strong{display:block;color:#0f172a}.flow-item span{font-size:12px;color:#64748b}.flow-arrow{display:flex;align-items:center;color:#94a3b8;font-weight:900}.validation-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.vstep{position:relative;border:1px solid #dbe4ea;background:#f8fafc;border-radius:12px;padding:17px}.vstep .n{font-size:11px;font-weight:900;color:#2563eb;text-transform:uppercase;letter-spacing:.06em}.vstep strong{display:block;margin:4px 0;color:#0f172a}.vstep span{font-size:12px;color:#64748b}table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}th,td{padding:11px 12px;border:1px solid #d1d5db;text-align:left;vertical-align:top}th{background:#f3f4f6;color:#0f172a}.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:900}.tag-pass{background:#dcfce7;color:#166534}.tag-reject{background:#fee2e2;color:#991b1b}.tag-warn{background:#fef3c7;color:#92400e}.tag-info{background:#dbeafe;color:#1e40af}.chart-card{border:1px solid #e2e8f0;border-radius:13px;background:#fbfdff;padding:20px;margin:18px 0}.chart-title{font-weight:900;color:#0f172a;margin-bottom:3px}.chart-sub{font-size:12px;color:#64748b;margin-bottom:16px}.bar-row{display:grid;grid-template-columns:155px 1fr 82px;gap:10px;align-items:center;margin:11px 0}.bar-label{font-size:13px;font-weight:800;color:#334155}.bar-track{height:13px;border-radius:999px;background:#e2e8f0;overflow:hidden}.bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#3b82f6,#1d4ed8)}.bar-value{text-align:right;font-size:12px;color:#475569;font-weight:800}.svg-wrap{overflow-x:auto}.risk-svg{width:100%;min-width:650px;height:auto;display:block}.principles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.principle{border:1px solid #e2e8f0;background:#f8fafc;border-radius:12px;padding:18px}.principle strong{display:block;color:#0f172a;font-size:16px;margin-bottom:5px}.principle span{font-size:13px;color:#64748b}.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.proof>div{border:1px solid #e2e8f0;border-radius:12px;padding:18px;background:#fff}.proof strong{display:block;color:#0f172a}.proof span{font-size:13px;color:#64748b}.steps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.step{background:#f8fafc;border:1px solid #dbe4ea;border-radius:11px;padding:18px}.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#0f766e;color:#fff;font-weight:900;font-size:13px;margin-right:8px}.code{font-family:Consolas,"Courier New",monospace;background:#f8fafc;border:1px solid #d1d5db;border-radius:9px;padding:16px 18px;line-height:2}details{border:1px solid #e2e8f0;border-radius:10px;background:#fff;margin:10px 0;overflow:hidden}summary{cursor:pointer;padding:14px 16px;font-weight:900;color:#0f172a;background:#f8fafc}details>div{padding:3px 17px 16px}details p{margin:10px 0}details ul{padding-left:22px}.summary{background:#111827;color:#fff;border-radius:15px;padding:25px;margin-top:20px}.summary h2{margin:0 0 12px}.summary p{font-weight:700}.releases{display:grid;gap:10px}.release-line{display:grid;grid-template-columns:80px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid #eef2f7}.release-line:last-child{border-bottom:0}.release-v{font-weight:900;color:#2563eb}.release-line strong{display:block;color:#0f172a}.release-line span{font-size:13px;color:#64748b}.footer{text-align:center;color:#64748b;font-size:13px;padding:34px 10px 0}.footer strong{color:#334155;font-size:15px}@media(max-width:820px){.metrics{grid-template-columns:repeat(2,1fr)}.validation-flow{grid-template-columns:repeat(2,1fr)}.proof{grid-template-columns:1fr}}@media(max-width:760px){.page{padding-top:14px}.hero{padding:34px 22px;border-radius:16px}.hero h1{font-size:30px}.metrics,.steps,.core,.principles,.validation-flow{grid-template-columns:1fr}.card{padding:22px 18px}.nav{top:0;overflow-x:auto;flex-wrap:nowrap;border-radius:0;margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}.nav::-webkit-scrollbar{display:none}.flow{gap:6px}.flow-item{min-width:155px}table{font-size:13px}th,td{padding:9px}.bar-row{grid-template-columns:110px 1fr 72px}.release-line{grid-template-columns:65px 1fr}}
+:root{--ink:#0f172a;--text:#1f2937;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--blue2:#1d4ed8;--green:#059669;--amber:#d97706;--red:#dc2626;--violet:#7c3aed;--bg:#f4f7fb;--card:#fff;--soft:#f8fafc}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Malgun Gothic","Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.72;word-break:keep-all;overflow-wrap:break-word;text-wrap:pretty}
+a{color:inherit}
+p,li,td,th,span,strong,h1,h2,h3,h4,summary,.btn,.pill,.tag{word-break:keep-all;overflow-wrap:break-word}
+code,.code,.url{word-break:break-all;overflow-wrap:anywhere}
+.page{max-width:1080px;margin:auto;padding:28px 18px 64px}
+.hero{background:linear-gradient(135deg,#0f172a 0%,#172554 60%,#1e3a8a 100%);color:#fff;padding:50px 40px;border-radius:24px;box-shadow:0 22px 55px rgba(15,23,42,.17)}
+.hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-size:13px;font-weight:900;letter-spacing:.09em;color:#bfdbfe}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.17);color:#dbeafe}
+.dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 0 3px rgba(52,211,153,.13)}
+.hero h1{font-size:40px;line-height:1.27;margin:14px 0 12px;letter-spacing:-.025em;max-width:860px}
+.hero p{font-size:17px;color:#dbe4f0;margin:0;max-width:880px}
+.hero-emphasis{margin-top:19px;padding:16px 18px;border-radius:12px;background:rgba(37,99,235,.18);border:1px solid rgba(147,197,253,.25);color:#eff6ff;font-weight:700}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.pill{font-size:12px;font-weight:800;color:#dbeafe;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}.btn{display:inline-block;padding:12px 18px;border-radius:9px;text-decoration:none;font-weight:900;transition:.15s ease;border:0}.btn:hover{transform:translateY(-1px);filter:brightness(.98)}.primary{background:#2563eb;color:#fff}.secondary{background:#fff;color:#111827}.ghost{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.nav{position:sticky;top:10px;z-index:20;display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;padding:12px 16px;background:rgba(255,255,255,.96);border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 6px 20px rgba(15,23,42,.05);backdrop-filter:blur(8px)}.nav a{text-decoration:none;font-size:14px;font-weight:800;color:#475569;white-space:nowrap}.nav a:hover{color:#2563eb}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:20px}.q{background:#fff;border:1px solid #e5e7eb;border-radius:13px;padding:18px;box-shadow:0 5px 18px rgba(15,23,42,.03)}.q strong{display:block;color:#0f172a;margin-bottom:5px}.q span{font-size:13px;color:#64748b}
+.card{scroll-margin-top:84px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:30px;margin-top:20px}.card h2{font-size:26px;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #2563eb;letter-spacing:-.015em}.card h3{font-size:19px;margin:26px 0 8px;color:#0f172a}.lead{color:#475569;margin-top:-2px;font-size:15px}.note{font-size:12px;color:#64748b}
+.notice{padding:18px 20px;margin:18px 0;background:#eff6ff;border-left:5px solid #2563eb;border-radius:2px 10px 10px 2px}.good{background:#ecfdf5;border-left-color:#059669}.warn{background:#fffbeb;border-left-color:#d97706}.danger{background:#fef2f2;border-left-color:#dc2626}.violet{background:#f5f3ff;border-left-color:#7c3aed}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.metric{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:18px}.metric strong{display:block;font-size:22px;color:#0f172a;line-height:1.2}.metric span{font-size:13px;color:#64748b}.metric .tiny{font-size:11px;margin-top:5px;display:block;color:#94a3b8}
+.core{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.core>div{border:1px solid #e2e8f0;border-radius:11px;padding:18px;background:#f8fafc}.core strong{display:block;font-size:17px;margin-bottom:5px}.blue{color:#1d4ed8}.orange{color:#b45309}.green{color:#047857}
+.flow{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding:4px 1px 10px}.flow-item{min-width:142px;flex:1;border:1px solid #dbe4ea;background:#f8fafc;border-radius:11px;padding:14px}.flow-item strong{display:block;color:#0f172a}.flow-item span{font-size:12px;color:#64748b}.flow-arrow{display:flex;align-items:center;color:#94a3b8;font-weight:900}
+.validation-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.vstep{border:1px solid #dbe4ea;background:#f8fafc;border-radius:12px;padding:17px}.vstep .n{font-size:11px;font-weight:900;color:#2563eb;text-transform:uppercase;letter-spacing:.06em}.vstep strong{display:block;margin:4px 0;color:#0f172a}.vstep span{font-size:12px;color:#64748b}
+.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;border-radius:10px}.table-wrap table{margin:0;min-width:650px}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:11px 12px;border:1px solid #d1d5db;text-align:left;vertical-align:top}th{background:#f3f4f6;color:#0f172a}.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap}.tag-pass{background:#dcfce7;color:#166534}.tag-reject{background:#fee2e2;color:#991b1b}.tag-warn{background:#fef3c7;color:#92400e}.tag-info{background:#dbeafe;color:#1e40af}
+.chart-card{border:1px solid #e2e8f0;border-radius:13px;background:#fbfdff;padding:20px;margin:18px 0}.chart-title{font-weight:900;color:#0f172a;margin-bottom:3px}.chart-sub{font-size:12px;color:#64748b;margin-bottom:16px}.bar-row{display:grid;grid-template-columns:155px 1fr 82px;gap:10px;align-items:center;margin:11px 0}.bar-label{font-size:13px;font-weight:800;color:#334155}.bar-track{height:13px;border-radius:999px;background:#e2e8f0;overflow:hidden}.bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#3b82f6,#1d4ed8)}.bar-value{text-align:right;font-size:12px;color:#475569;font-weight:800}
+.svg-wrap{overflow-x:auto}.risk-svg{width:100%;min-width:650px;height:auto;display:block}
+.principles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.principle{border:1px solid #e2e8f0;background:#f8fafc;border-radius:12px;padding:18px}.principle strong{display:block;color:#0f172a;font-size:16px;margin-bottom:5px}.principle span{font-size:13px;color:#64748b}
+.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.proof>div{border:1px solid #e2e8f0;border-radius:12px;padding:18px;background:#fff}.proof strong{display:block;color:#0f172a}.proof span{font-size:13px;color:#64748b}
+.timeline{position:relative;margin-top:16px}.timeline:before{content:"";position:absolute;left:24px;top:5px;bottom:5px;width:2px;background:#dbeafe}.tl{position:relative;padding:0 0 22px 62px}.tl:last-child{padding-bottom:0}.tl-dot{position:absolute;left:14px;top:3px;width:22px;height:22px;border-radius:50%;background:#2563eb;border:5px solid #dbeafe}.tl-version{font-size:12px;font-weight:900;color:#2563eb;margin-bottom:3px}.tl strong{display:block;font-size:17px;color:#0f172a;margin-bottom:4px}.tl p{margin:0;color:#475569;font-size:14px}.tl small{display:block;color:#94a3b8;margin-top:5px}
+.decision{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:18px 0}.decision>div{border:1px solid #dbe4ea;border-radius:12px;padding:14px;background:#f8fafc;text-align:center}.decision strong{display:block;color:#0f172a;font-size:13px}.decision span{display:block;font-size:11px;color:#64748b;margin-top:4px}.decision .keep{border-color:#86efac;background:#f0fdf4}.decision .reject{border-color:#fecaca;background:#fef2f2}
+.steps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.step{background:#f8fafc;border:1px solid #dbe4ea;border-radius:11px;padding:18px}.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#0f766e;color:#fff;font-weight:900;font-size:13px;margin-right:8px}.code{font-family:Consolas,"Courier New",monospace;background:#f8fafc;border:1px solid #d1d5db;border-radius:9px;padding:16px 18px;line-height:2}
+details{border:1px solid #e2e8f0;border-radius:10px;background:#fff;margin:10px 0;overflow:hidden}summary{cursor:pointer;padding:14px 16px;font-weight:900;color:#0f172a;background:#f8fafc}details>div{padding:3px 17px 16px}details p{margin:10px 0}details ul{padding-left:22px}
+.summary{background:#111827;color:#fff;border-radius:15px;padding:25px;margin-top:20px}.summary h2{margin:0 0 12px}.summary p{font-weight:700}
+.footer{text-align:center;color:#64748b;font-size:13px;padding:34px 10px 0}.footer strong{color:#334155;font-size:15px}
+@media(max-width:820px){.metrics{grid-template-columns:repeat(2,1fr)}.validation-flow{grid-template-columns:repeat(2,1fr)}.proof{grid-template-columns:1fr}.decision{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){body{line-height:1.68}.page{padding-top:14px}.hero{padding:34px 22px;border-radius:16px}.hero h1{font-size:30px;line-height:1.34}.hero p{font-size:15px}.metrics,.steps,.core,.principles,.validation-flow{grid-template-columns:1fr}.card{padding:22px 18px}.card h2{font-size:23px;line-height:1.35}.nav{top:0;overflow-x:auto;flex-wrap:nowrap;border-radius:0;margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}.nav::-webkit-scrollbar{display:none}.flow{gap:6px}.flow-item{min-width:155px}.bar-row{grid-template-columns:105px 1fr 70px}.decision{grid-template-columns:1fr}.tl{padding-left:56px}.timeline:before{left:21px}.tl-dot{left:11px}.btn{width:auto}.table-wrap{margin-left:0;margin-right:0}}
 </style>
 </head>
 <body>
 <div class="page">
+
 <section class="hero">
-<div class="hero-top"><div class="brand">AI STOCK BRIEF v2.6</div><div class="status"><span class="dot"></span>현재 운영 버전</div></div>
-<h1>숫자를 보여주는 봇보다,<br>숫자를 검증하는 봇을 만들고 있습니다.</h1>
-<p>국내외 시장과 관심종목을 Python으로 정량 분석하고, 필요한 뉴스와 AI 해석을 더해 텔레그램으로 전달합니다. 모닝 브리핑과 자동 기술신호 변화 감지까지 지원하지만, 기능 추가보다 더 중요하게 보는 것은 <strong style="color:#fff">“이 점수를 실제 데이터로 얼마나 검증했는가”</strong>입니다.</p>
-<div class="hero-emphasis">백테스트 → 강건성 검증 → 완전 비중복 외부검증 → 후보 Calibration → 후보 기각 → 다음 단계 Live OOS까지. 결과가 좋지 않은 검증도 숨기지 않고, 기준을 통과하지 못한 점수 변경은 실제 서비스에 적용하지 않습니다.</div>
-<div class="pills"><span class="pill">100종목 · 108,234 관측치</span><span class="pill">Unseen 50종목 · overlap 0</span><span class="pill">5·20·60 거래일 검증</span><span class="pill">Bootstrap / Non-overlap</span><span class="pill">340 tests + 20 subtests</span><span class="pill">v2.6 · 2026.08.17</span></div>
-<div class="actions"><a class="btn primary" href="https://t.me/crackuser_bot" target="_blank" rel="noopener noreferrer">텔레그램 봇 사용하기</a><a class="btn secondary" href="#validation">검증 과정 보기</a><a class="btn secondary" href="validation_summary.csv" download>검증 요약 CSV</a></div>
+  <div class="hero-top">
+    <div class="brand">AI STOCK BRIEF v2.6</div>
+    <div class="status"><span class="dot"></span>현재 운영 버전</div>
+  </div>
+  <h1>시장 데이터를 정량화하고,<br>그 결과를 반복해서 검증합니다.</h1>
+  <p>국내외 시장과 관심종목을 Python으로 정량 분석하고, 필요한 뉴스와 AI 해석을 더해 텔레그램으로 전달합니다. 기능을 늘리는 것만큼 중요하게 보는 것은 <strong style="color:#fff">점수가 실제 데이터에서 얼마나 일관되게 작동하는지 확인하는 과정</strong>입니다.</p>
+  <div class="hero-emphasis">백테스트 한 번으로 결론을 내리지 않습니다. Point-in-time 계산, 비중복 표본, Bootstrap, 종목 동일가중, Leave-one-symbol-out, 완전 비중복 외부 universe 검증을 거친 뒤에도 개선 기준을 충족하지 못한 Calibration 후보는 실제 서비스에 적용하지 않았습니다.</div>
+  <div class="pills">
+    <span class="pill">100종목 · 108,234 개발 관측치</span>
+    <span class="pill">외부검증 50종목 · overlap 0</span>
+    <span class="pill">5·20·60 거래일</span>
+    <span class="pill">Bootstrap / Non-overlap</span>
+    <span class="pill">340 tests + 20 subtests</span>
+    <span class="pill">v2.6 · 2026.08.17</span>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="https://t.me/crackuser_bot" target="_blank" rel="noopener noreferrer">텔레그램 봇 사용하기</a>
+    <a class="btn secondary" href="#validation">검증 방법 보기</a>
+    <a class="btn secondary" href="validation_summary.csv" target="_blank" rel="noopener noreferrer">검증 요약 CSV</a>
+  </div>
 </section>
-<nav class="nav"><a href="#overview">한눈에 보기</a><a href="#why-validation">왜 검증했나</a><a href="#validation">검증 과정</a><a href="#calibration">Calibration</a><a href="#evidence">데이터/도표</a><a href="#features">기능</a><a href="#guide">사용 방법</a><a href="#manual">항목 설명</a><a href="#roadmap">다음 검증</a></nav>
-<div class="quick" id="overview"><div class="q"><strong>시장 브리핑</strong><span>KOSPI·KOSDAQ·NASDAQ·S&amp;P 500·SOX·VIX·환율·원자재</span></div><div class="q"><strong>관심종목 정량분석</strong><span>Technical Edge·Risk·Confidence와 주요 기술지표를 분리 계산</span></div><div class="q"><strong>08:00 모닝 브리핑</strong><span>관심종목 상태와 이전 분석 대비 중요한 변화를 자동 정리</span></div><div class="q"><strong>15분 변화 감지</strong><span>정규장 중 의미 있는 Edge·Risk·RS·Trend 변화를 선택적으로 알림</span></div><div class="q"><strong>뉴스 + AI 해석</strong><span>정량값은 Python이 계산하고 AI는 읽기 쉬운 설명을 담당</span></div><div class="q"><strong>검증 산출물</strong><span>Observation CSV·통계 JSON·Markdown 보고서로 재현 가능한 연구 결과 관리</span></div></div>
-<section class="card" id="why-validation"><h2>왜 이렇게까지 검증했나요?</h2><p class="lead">기술지표 몇 개를 합치면 그럴듯한 점수는 쉽게 만들 수 있습니다. 어려운 것은 그 점수가 다른 종목·다른 기간·다른 시장에서도 의미가 있는지 확인하는 일입니다.</p><div class="notice good"><strong>AI STOCK BRIEF의 Calibration 원칙</strong><br>Calibration은 백테스트 수익률을 높이기 위해 숫자를 맞추는 과정이 아니라, <strong>새 후보가 기존 방식보다 충분히 나은지 검증하고, 부족하면 기각하는 과정</strong>으로 사용했습니다.</div><div class="principles"><div class="principle"><strong>미래 데이터 차단</strong><span>신호 시점 t까지의 데이터만 점수 계산에 사용하고, 미래 데이터는 결과 측정에만 사용합니다.</span></div><div class="principle"><strong>거래일 기준 5·20·60일</strong><span>달력일이 아니라 실제 거래 관측치 기준으로 이후 성과를 측정합니다.</span></div><div class="principle"><strong>평균만 보지 않기</strong><span>중앙값, symbol equal-weight, non-overlap, MFE·MAE, 최대낙폭, 변동성을 함께 봅니다.</span></div><div class="principle"><strong>Bootstrap으로 불확실성 확인</strong><span>Date-cluster와 moving-block bootstrap을 사용해 단순 평균이 우연인지 확인합니다.</span></div><div class="principle"><strong>Unseen universe 별도 검증</strong><span>기존 종목과 겹치지 않는 50종목을 따로 확보해 외부 검증을 진행했습니다.</span></div><div class="principle"><strong>실패 결과도 보존</strong><span>전체 외부검증이 기준을 통과하지 못한 사실과 Calibration 후보 기각 결과도 그대로 남겼습니다.</span></div></div></section>
-<section class="card" id="validation"><h2>검증, 검증, 또 검증</h2><p class="lead">한 번의 백테스트를 “검증 완료”라고 부르지 않았습니다. 같은 가설을 서로 다른 각도에서 반복해서 흔들어봤습니다.</p><div class="metrics"><div class="metric"><strong>108,234</strong><span>통합 Development Observation</span><small class="tiny">100종목</small></div><div class="metric"><strong>54,030</strong><span>외부검증 Observation</span><small class="tiny">완전 비중복 50종목</small></div><div class="metric"><strong>0</strong><span>기존 universe와 symbol overlap</span><small class="tiny">External validation 당시</small></div><div class="metric"><strong>340 + 20</strong><span>v2.6 회귀 테스트 + subtests</span><small class="tiny">실패 0</small></div></div><div class="validation-flow"><div class="vstep"><div class="n">Step 1</div><strong>Point-in-time Backtest</strong><span>미래 데이터가 feature에 들어가지 않도록 시점별로 재계산</span></div><div class="vstep"><div class="n">Step 2</div><strong>Non-overlap</strong><span>겹치는 forward window가 표본 수를 과장하지 않는지 재검증</span></div><div class="vstep"><div class="n">Step 3</div><strong>Bootstrap CI</strong><span>Date-cluster + 20/60일 moving-block bootstrap</span></div><div class="vstep"><div class="n">Step 4</div><strong>Tail Check</strong><span>Trimmed/Winsorized mean, 중앙값, Top 1%·5% 기여도</span></div><div class="vstep"><div class="n">Step 5</div><strong>Symbol Equal-weight</strong><span>일부 종목이 전체 평균을 끌어올리는지 확인</span></div><div class="vstep"><div class="n">Step 6</div><strong>Leave-one-symbol-out</strong><span>특정 종목 제거 시 결과 부호가 뒤집히는지 확인</span></div><div class="vstep"><div class="n">Step 7</div><strong>Unseen 50종목</strong><span>기존 universe와 overlap 0인 외부검증 수행</span></div><div class="vstep"><div class="n">Step 8</div><strong>Candidate Rejection</strong><span>개선 조건을 못 넘은 A/B/C 후보는 Production에 미적용</span></div></div><div class="notice warn"><strong>좋은 결과만 선택하지 않았습니다.</strong><br>외부검증에서 전체 Technical Edge는 사전 기준을 충족하지 못해 <strong>NOT_VALIDATED</strong>로 기록했습니다. 반면 Risk는 <strong>PASS</strong>, KOSDAQ 효과는 별도 universe에서도 재현됐습니다. 이 결과 때문에 오히려 65/80 기준과 Production 점수를 성급하게 바꾸지 않았습니다.</div></section>
-<section class="card" id="calibration"><h2>Calibration은 “적용”보다 “기각”에 더 많이 사용했습니다</h2><p class="lead">기존 100종목·108,234개 관측치를 Development Dataset으로 명시하고, 구성요소 진단 후 세 가지 후보를 비교했습니다. 평균 수익률 하나만 좋아졌다고 채택하지 않고 중앙값·equal-weight·tail dependency까지 통과해야 Production 후보가 되도록 했습니다.</p><table><thead><tr><th>후보</th><th>핵심 아이디어</th><th>개선 조건</th><th>판정</th><th>왜 적용하지 않았나</th></tr></thead><tbody><tr><td><strong>Candidate A</strong></td><td>RS 비중 확대, 구성요소 weight 재조정</td><td>2 / 6</td><td><span class="tag tag-reject">REJECT</span></td><td>20일 non-overlap·equal-weight가 개선되지 않고 tail dependency 유지</td></tr><tr><td><strong>Candidate B</strong></td><td>A + 과열/participation gate</td><td>2 / 6</td><td><span class="tag tag-reject">REJECT</span></td><td>Gate를 추가해도 핵심 약점이 제거되지 않음</td></tr><tr><td><strong>Candidate C</strong></td><td>KR/US 지역별 소폭 weight 조정</td><td>3 / 6</td><td><span class="tag tag-reject">REJECT</span></td><td>평균은 일부 개선됐지만 중앙값·equal-weight·tail dependency 기준 미충족</td></tr></tbody></table><div class="notice danger"><strong>결론: NO_CANDIDATE_READY</strong><br>“더 좋은 백테스트 숫자”보다 “다른 조건에서도 버틸 수 있는가”를 우선했습니다. 그래서 Candidate C가 일부 평균 지표에서 더 좋아도 실제 서비스 점수에는 적용하지 않았습니다.</div><div class="proof"><div><strong>Threshold 65 / 80 유지</strong><span>연구 결과만으로 기준선을 바꾸지 않았습니다.</span></div><div><strong>Risk와 Edge 독립 유지</strong><span>위험 점수를 Edge에서 차감해 결과를 억지로 보정하지 않았습니다.</span></div><div><strong>Test 결과로 후보 선택 금지</strong><span>Holdout을 보고 다시 고르는 방식의 데이터 누수를 피했습니다.</span></div></div></section>
-<section class="card" id="evidence"><h2>검증 데이터를 눈으로 확인하기</h2><p class="lead">페이지를 쉽게 읽을 수 있도록 핵심 숫자를 시각화했습니다. 아래 값은 기존 백테스트·robustness·external validation 결과에서 가져온 요약치입니다.</p><div class="chart-card"><div class="chart-title">108,234개 Development Observation 구성</div><div class="chart-sub">외부검증 결과를 확인한 이후에는 해당 unseen universe도 이후 연구에서는 Development Dataset으로 명확히 재분류했습니다.</div><div class="bar-row"><div class="bar-label">KOSPI</div><div class="bar-track"><div class="bar-fill" style="width:29.63%"></div></div><div class="bar-value">32,070</div></div><div class="bar-row"><div class="bar-label">US Tech</div><div class="bar-track"><div class="bar-fill" style="width:26.38%"></div></div><div class="bar-value">28,548</div></div><div class="bar-row"><div class="bar-label">KOSDAQ</div><div class="bar-track"><div class="bar-fill" style="width:23.70%"></div></div><div class="bar-value">25,656</div></div><div class="bar-row"><div class="bar-label">US Non-Tech</div><div class="bar-track"><div class="bar-fill" style="width:20.29%"></div></div><div class="bar-value">21,960</div></div></div><div class="chart-card"><div class="chart-title">Risk Score 검증: 위험도가 높을수록 실제 downside와 변동성도 증가</div><div class="chart-sub">Historical robustness dataset 기준. NMAE와 실현변동성이 Low → Medium → High 순으로 단조 증가했습니다.</div><div class="svg-wrap"><svg class="risk-svg" viewBox="0 0 760 320" role="img" aria-label="Risk validation bar chart"><line x1="80" y1="255" x2="730" y2="255" stroke="#cbd5e1" stroke-width="1"/><line x1="80" y1="205" x2="730" y2="205" stroke="#e2e8f0" stroke-width="1"/><line x1="80" y1="155" x2="730" y2="155" stroke="#e2e8f0" stroke-width="1"/><line x1="80" y1="105" x2="730" y2="105" stroke="#e2e8f0" stroke-width="1"/><line x1="80" y1="55" x2="730" y2="55" stroke="#e2e8f0" stroke-width="1"/><text x="52" y="259" font-size="11" fill="#64748b">0</text><text x="45" y="209" font-size="11" fill="#64748b">20</text><text x="45" y="159" font-size="11" fill="#64748b">40</text><text x="45" y="109" font-size="11" fill="#64748b">60</text><text x="45" y="59" font-size="11" fill="#64748b">80%</text><rect x="145" y="240.1" width="48" height="14.9" rx="5" fill="#60a5fa"/><rect x="198" y="182.6" width="48" height="72.4" rx="5" fill="#1d4ed8"/><text x="169" y="235" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">5.95</text><text x="222" y="177" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">28.97</text><rect x="350" y="231.9" width="48" height="23.1" rx="5" fill="#60a5fa"/><rect x="403" y="132.3" width="48" height="122.7" rx="5" fill="#1d4ed8"/><text x="374" y="226" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">9.25</text><text x="427" y="127" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">49.08</text><rect x="555" y="229.2" width="48" height="25.8" rx="5" fill="#60a5fa"/><rect x="608" y="82.9" width="48" height="172.1" rx="5" fill="#1d4ed8"/><text x="579" y="223" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">10.32</text><text x="632" y="77" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">68.84</text><text x="196" y="284" text-anchor="middle" font-size="13" font-weight="800" fill="#334155">Low Risk</text><text x="401" y="284" text-anchor="middle" font-size="13" font-weight="800" fill="#334155">Medium Risk</text><text x="606" y="284" text-anchor="middle" font-size="13" font-weight="800" fill="#334155">High Risk</text><rect x="278" y="302" width="10" height="10" rx="2" fill="#60a5fa"/><text x="294" y="311" font-size="11" fill="#64748b">NMAE</text><rect x="358" y="302" width="10" height="10" rx="2" fill="#1d4ed8"/><text x="374" y="311" font-size="11" fill="#64748b">실현변동성</text></svg></div></div><div class="notice"><strong>숫자를 재현 가능한 산출물로 남깁니다.</strong><br>연구 파이프라인은 observation 단위 CSV, calibration JSON, robustness metric JSON, Markdown summary를 생성하도록 구성했습니다. 홈페이지에는 민감정보 없이 핵심 검증 결과만 정리한 <strong>요약 CSV</strong>를 공개합니다.<div style="margin-top:12px"><a class="btn ghost" href="validation_summary.csv" download>validation_summary.csv 다운로드</a></div></div></section>
-<section class="card"><h2>외부검증에서 좋지 않은 결과도 그대로 남겼습니다</h2><p class="lead">완전히 새로운 50종목, 54,030개 observation으로 검증했을 때 전체 Edge는 우리가 정한 기준을 통과하지 못했습니다. 이 결과를 실패로 숨기지 않고 다음 설계의 제약조건으로 사용했습니다.</p><table><thead><tr><th>검증 항목</th><th>결과</th><th>해석</th></tr></thead><tbody><tr><td>전체 External Validation</td><td><span class="tag tag-warn">NOT_VALIDATED</span></td><td>KOSPI와 미국 비기술주, symbol equal-weight, block CI, tail dependency를 함께 보면 전체 Edge를 보편적 신호로 확정하기 어려움</td></tr><tr><td>KOSDAQ Expanded Validation</td><td><span class="tag tag-pass">REPLICATED</span></td><td>신규 KOSDAQ 20종목에서도 주요 평균 방향이 양수였고 단일 종목 제거 sign flip 없음</td></tr><tr><td>Risk Validation</td><td><span class="tag tag-pass">PASS</span></td><td>Risk가 높아질수록 downside·최대낙폭·변동성이 단계적으로 증가</td></tr><tr><td>Confidence</td><td><span class="tag tag-info">INSUFFICIENT_VARIATION</span></td><td>당시 historical EOD 표본에서 variation이 부족해 예측력 주장을 하지 않음</td></tr></tbody></table><p style="color:#64748b;font-size:13px">※ 외부검증 결과를 확인한 뒤 해당 50종목은 이후 연구에서 더 이상 “unseen”으로 취급하지 않고 Development Dataset으로 분류했습니다. 이미 본 데이터를 pristine test처럼 재사용하지 않는 것이 원칙입니다.</p></section>
-<section class="card" id="features"><h2>현재 v2.6에서 실제로 제공하는 기능</h2><div class="core"><div><strong class="blue">Technical Edge</strong>추세·Momentum·Relative Strength·Participation·Setup을 종합한 기술적 우위 점수입니다. 상승확률이 아닙니다.</div><div><strong class="orange">Technical Risk</strong>Edge와 별개로 변동성·downside 위험을 평가합니다. 검증에서도 Risk 구간별 차이가 재현됐습니다.</div><div><strong class="green">Confidence</strong>종목의 상승 가능성이 아니라 데이터 품질과 분석 신뢰도를 표시합니다.</div></div><h3>자동 모닝 브리핑</h3><p>매일 08:00 KST에 관심종목의 현재 상태와 이전 결과 대비 주요 변화를 정리합니다. 같은 종목은 여러 사용자가 등록해도 한 번 분석한 뒤 결과를 재사용합니다.</p><h3>자동 기술신호 변화 감지</h3><p>정규장 중 15분 주기로 열린 시장의 관심종목을 확인하고, Edge 65/80 돌파·판단 변경·Risk 등급·상대강도·Trend·Momentum의 의미 있는 변화만 선별해 알립니다. threshold 주변에서 반복 알림이 발생하지 않도록 hysteresis와 cooldown을 별도 적용하며, 이는 Production Edge 계산에는 영향을 주지 않습니다.</p><h3>Python 계산 + AI 설명</h3><p>현재가와 Technical Edge/Risk/Confidence는 Python 정량 엔진이 직접 계산합니다. AI는 핵심 정량값을 임의로 덮어쓰지 않고, 필요한 뉴스와 정량 결과를 사람이 읽기 쉬운 문장으로 정리합니다. 모닝 브리핑과 자동 변화 감지는 Python-only로 동작합니다.</p></section>
-<section class="summary"><h2>핵심만 3줄</h2><p>1. AI STOCK BRIEF는 “좋아 보이는 점수”보다 <strong>검증 가능한 점수</strong>를 만드는 데 더 많은 시간을 썼습니다.</p><p>2. 100종목·108,234개 관측치, bootstrap·non-overlap·equal-weight·unseen 50종목 외부검증까지 진행했고, 기준을 못 넘은 후보는 실제 서비스에 적용하지 않았습니다.</p><p>3. 앞으로도 이미 본 과거 데이터에 맞추기보다 실제 미래 표본을 쌓는 Live Out-of-Sample 검증을 우선합니다.</p></section>
-<section class="card" id="guide"><h2>사용 방법</h2><div class="steps"><div class="step"><span class="num">1</span><strong>텔레그램 봇 실행</strong><p>아래 링크에서 AI STOCK BRIEF를 시작합니다.</p><a class="btn primary" href="https://t.me/crackuser_bot" target="_blank" rel="noopener noreferrer">텔레그램 봇 열기</a></div><div class="step"><span class="num">2</span><strong>관심종목 등록</strong><p>국내 종목명/종목코드, 미국 종목명/티커를 사용할 수 있습니다.</p></div><div class="step"><span class="num">3</span><strong>/analyze</strong><p>현재 관심종목의 정량분석과 주요 해석을 확인합니다.</p></div><div class="step"><span class="num">4</span><strong>/us</strong><p>미국 주요 시장지표와 글로벌 자산을 확인합니다.</p></div><div class="step"><span class="num">5</span><strong>/alerts_on</strong><p>관심종목의 중요한 기술신호 변화 자동 알림을 직접 opt-in합니다.</p></div><div class="step"><span class="num">6</span><strong>모닝 브리핑</strong><p>운영자가 기능을 켠 경우 매일 08:00 KST에 관심종목 요약을 받을 수 있습니다.</p></div></div><h3>관심종목 등록 예시</h3><div class="code">/추가 삼성전자<br>/add SK하이닉스<br>/add 000660<br>/add NVDA<br>/add 엔비디아</div><h3>자동 알림 명령</h3><div class="code">/alerts_on &nbsp;&nbsp;&nbsp; 자동 변화 알림 켜기<br>/alerts_off &nbsp;&nbsp; 자동 변화 알림 끄기<br>/alerts_status &nbsp; 현재 알림 상태 확인</div></section>
-<section class="card" id="manual"><h2>분석 결과를 쉽게 읽는 법</h2><p class="lead">처음에는 아래 다섯 가지만 보면 됩니다. 더 자세한 항목은 펼쳐서 확인할 수 있습니다.</p><div class="notice warn"><strong>Technical Edge 80 = 상승확률 80%가 아닙니다.</strong><br>현재 기술적 조건을 정량화한 점수입니다. Risk, 시장 상태, 뉴스와 함께 봐야 합니다.</div><details open><summary>1. Technical Edge</summary><div><p>현재 차트와 시장 데이터를 종합해 기술적으로 얼마나 유리한 위치인지 0~100점으로 표현합니다.</p><table><thead><tr><th>점수</th><th>판단</th><th>의미</th></tr></thead><tbody><tr><td>80 이상</td><td>강한 매수우위</td><td>긍정적인 기술조건이 비교적 많이 겹치는 상태</td></tr><tr><td>65~79</td><td>매수우위</td><td>긍정적인 기술신호가 상대적으로 우세</td></tr><tr><td>45~64</td><td>중립</td><td>뚜렷한 기술적 우위가 없는 상태</td></tr><tr><td>30~44</td><td>매도우위</td><td>부정적인 기술조건이 상대적으로 우세</td></tr><tr><td>30 미만</td><td>강한 매도우위</td><td>여러 기술조건이 부정적으로 겹치는 상태</td></tr></tbody></table></div></details><details open><summary>2. Technical Risk</summary><div><p>상승 우위와 별개로 가격 위험도를 평가합니다. 검증에서는 Risk가 높아질수록 downside와 실현변동성이 커지는 방향이 확인됐습니다.</p><table><tbody><tr><td><strong>0~34</strong></td><td>낮음</td></tr><tr><td><strong>35~64</strong></td><td>보통</td></tr><tr><td><strong>65~100</strong></td><td>높음</td></tr></tbody></table></div></details><details><summary>3. Relative Strength / Benchmark</summary><div><p>종목이 단순히 올랐는지가 아니라 시장 또는 관련 Benchmark보다 더 강했는지 확인합니다. 예를 들어 종목 +15%, Benchmark +5%라면 상대성과는 +10%p입니다.</p></div></details><details><summary>4. Trend / RSI / MACD / 거래량</summary><div><p><strong>Trend</strong>는 이동평균선 배열과 가격 구조, <strong>RSI·MACD</strong>는 Momentum, <strong>Participation</strong>은 거래량 동반 여부를 확인합니다.</p><p>다만 v2.4 Raw Feature 연구에서 RSI·MACD·거래량이 모든 시장에서 독립적으로 같은 효과를 보이지 않는 것을 확인해, 한 지표만으로 결론 내리지 않습니다.</p></div></details><details><summary>5. Confidence</summary><div><p>상승 가능성 점수가 아니라 현재 분석에 사용된 데이터가 얼마나 정상적이고 충분한지를 나타내는 데이터 품질 지표입니다.</p></div></details><details><summary>이동평균 / Bollinger / 고점·저점 / 과열</summary><div><p>MA20·MA60·MA120, 이동평균 이격도, Bollinger %B·Bandwidth, 최근 60일 고점/저점과의 거리를 이용해 현재 가격의 추세와 위치를 보조적으로 확인합니다.</p><p>강한 추세와 과열은 동시에 존재할 수 있으므로 “과열 = 즉시 하락”처럼 단순 해석하지 않습니다.</p></div></details><details><summary>/us 미국시장 지표</summary><div><table><tbody><tr><td><strong>NASDAQ</strong></td><td>미국 기술주 중심 시장 흐름</td></tr><tr><td><strong>S&amp;P 500</strong></td><td>미국 대형주 시장 전반</td></tr><tr><td><strong>SOX</strong></td><td>필라델피아 반도체지수</td></tr><tr><td><strong>VIX</strong></td><td>예상 변동성과 시장 불안 참고</td></tr><tr><td><strong>USD/KRW</strong></td><td>원·달러 환율</td></tr><tr><td><strong>WTI / GOLD</strong></td><td>에너지 및 안전자산 흐름 참고</td></tr></tbody></table></div></details></section>
-<section class="card" id="roadmap"><h2>다음 검증 단계: Live Out-of-Sample</h2><p class="lead">과거 데이터에 더 맞추는 대신, 이제는 실제 분석 시점에 신호를 고정하고 미래가 지나간 뒤 결과를 평가하는 방향으로 넘어갑니다.</p><div class="flow"><div class="flow-item"><strong>실시간 기록</strong><span>당시 Edge·Risk·가격·시장상태 고정</span></div><div class="flow-arrow">→</div><div class="flow-item"><strong>기다림</strong><span>미래 데이터가 실제로 생길 때까지 PENDING</span></div><div class="flow-arrow">→</div><div class="flow-item"><strong>5 거래일</strong><span>Raw / Benchmark excess 측정</span></div><div class="flow-arrow">→</div><div class="flow-item"><strong>20 거래일</strong><span>MFE·MAE·DD·변동성 확인</span></div><div class="flow-arrow">→</div><div class="flow-item"><strong>60 거래일</strong><span>장기 성과 누적</span></div><div class="flow-arrow">→</div><div class="flow-item"><strong>충분한 표본 후</strong><span>그때 다시 Calibration 검토</span></div></div><div class="notice violet"><strong>이미 본 과거 데이터는 pristine test로 다시 부르지 않습니다.</strong><br>외부검증 결과를 본 순간 그 universe는 이후 연구에서 Development Dataset으로 취급합니다. 다음 점수 개선은 실제로 새로 쌓인 미래 표본이 충분해진 뒤 검토하는 것이 원칙입니다.</div></section>
-<section class="card"><h2>버전별 개발 흐름</h2><div class="releases"><div class="release-line"><div class="release-v">v2.0</div><div><strong>Production 안정화</strong><span>시장시간·freshness·partial candle·Toss token 안정성 및 scoring 보호</span></div></div><div class="release-line"><div class="release-v">v2.1</div><div><strong>Backtest / Robustness / External Validation</strong><span>point-in-time, 5/20/60일, bootstrap, non-overlap, unseen universe 검증 인프라</span></div></div><div class="release-line"><div class="release-v">v2.2</div><div><strong>AI 호출 효율화</strong><span>종목별 Gate·cache·single-flight로 불필요한 AI 호출 감소</span></div></div><div class="release-line"><div class="release-v">v2.3</div><div><strong>Technical Edge 재연구</strong><span>구성요소 진단, Candidate A/B/C 비교 후 전부 REJECT</span></div></div><div class="release-line"><div class="release-v">v2.4</div><div><strong>Raw Feature 검증</strong><span>RSI·MACD·Breakout·거래량·MA 구조를 원시 feature 단계에서 재검증</span></div></div><div class="release-line"><div class="release-v">v2.5</div><div><strong>Morning Briefing</strong><span>08:00 KST 관심종목 자동 요약, snapshot 비교, Python-only 브리핑</span></div></div><div class="release-line"><div class="release-v">v2.6</div><div><strong>Automatic Signal Change Detection</strong><span>15분 market-aware 감시, 사용자 opt-in, hysteresis·cooldown·batch alert</span></div></div></div></section>
-<section class="card" id="notice"><h2>이용 전 참고사항</h2><p>AI STOCK BRIEF는 특정 종목의 상승을 보장하거나 자동으로 매수·매도를 지시하는 시스템이 아닙니다. 여러 시장 데이터와 기술지표를 빠르게 정리하고 <strong>사용자가 직접 판단하는 데 필요한 정보를 한 화면에 제공</strong>하는 것을 목표로 합니다.</p><div class="notice warn">백테스트와 통계 검증은 미래 수익을 보장하지 않습니다. 특히 External Validation에서 전체 Edge가 모든 시장에서 동일하게 재현되지 않았다는 사실도 함께 공개합니다.</div><div style="text-align:center;margin-top:24px"><a class="btn primary" href="https://t.me/crackuser_bot" target="_blank" rel="noopener noreferrer">AI STOCK BRIEF 텔레그램 봇 사용하기</a><div style="margin-top:10px;color:#64748b;font-size:13px">https://t.me/crackuser_bot</div></div></section>
-<footer class="footer"><strong>AI STOCK BRIEF v2.6</strong><br>Quantitative Market Analysis · Validation First · AI Interpretation</footer>
+
+<nav class="nav">
+  <a href="#overview">한눈에 보기</a>
+  <a href="#history">개발 과정</a>
+  <a href="#architecture">분석 구조</a>
+  <a href="#validation">검증 체계</a>
+  <a href="#calibration">Calibration</a>
+  <a href="#automation">자동화</a>
+  <a href="#guide">사용 방법</a>
+  <a href="#manual">항목 설명</a>
+</nav>
+
+<div class="quick" id="overview">
+  <div class="q"><strong>시장 브리핑</strong><span>KOSPI·KOSDAQ·NASDAQ·S&amp;P 500·SOX·VIX 등 주요 시장 흐름</span></div>
+  <div class="q"><strong>관심종목 분석</strong><span>현재가, 추세, RSI, MACD, Relative Strength, Risk를 정량 분석</span></div>
+  <div class="q"><strong>모닝 브리핑</strong><span>매일 08:00 KST 관심종목의 현재 상태와 주요 변화 요약</span></div>
+  <div class="q"><strong>자동 변화 감지</strong><span>장중 15분 주기로 Edge·Risk·RS·Trend·Momentum의 의미 있는 변화 확인</span></div>
+  <div class="q"><strong>검증 기반 개선</strong><span>개발 데이터와 완전 비중복 외부검증을 분리해 Calibration 과적합을 경계</span></div>
+</div>
+
+<section class="card" id="history">
+  <h2>v1.0부터 현재까지의 개발 과정</h2>
+  <p class="lead">초기에는 “시장과 관심종목을 한 번에 보는 브리핑”에서 출발했고, 이후 데이터 정확도·비용 효율·통계 검증·자동화 순서로 기능을 확장했습니다.</p>
+
+  <div class="timeline">
+    <div class="tl"><span class="tl-dot"></span><div class="tl-version">v1.0 · 초기 공개</div><strong>국내시장 중심 AI 브리핑</strong><p>국내 증시와 관심종목 데이터를 Python으로 계산하고, 뉴스와 AI 해석을 Telegram으로 전달하는 기본 구조를 만들었습니다.</p></div>
+
+    <div class="tl"><span class="tl-dot"></span><div class="tl-version">v1.x · 운영 효율화</div><strong>동일 분석 결과 공용 캐시 도입</strong><p>같은 종목의 정량 데이터, 글로벌 시장 정보, 중요 뉴스가 변하지 않았다면 60분 동안 이전 AI 분석을 재사용하도록 개선했습니다. 다른 사용자가 같은 종목을 요청해도 동일 상태라면 AI를 다시 호출하지 않는 공용 캐시 구조로 발전시켰습니다.</p><small>목표: 반복 호출 비용 감소 + 사용자 응답속도 개선</small></div>
+
+    <div class="tl"><span class="tl-dot"></span><div class="tl-version">v2.0 · 분석엔진 통합 개선</div><strong>KR/US 시장 구조와 정량 신호를 전면 정비</strong><p>Toss 토큰 공유·401 경쟁 방지, KR/US 거래세션, 진행 중 일봉 처리, Wilder ATR, Technical Edge·Risk·Confidence 분리, KOSPI/KOSDAQ/SOX/NASDAQ/S&amp;P 500 benchmark, Structured Output 등을 통합했습니다.</p><small>초기 통합 작업 72 tests → 잔여 hardening 후 84 tests / 0 failed</small></div>
+
+    <div class="tl"><span class="tl-dot"></span><div class="tl-version">v2.1 · Backtest & Robustness</div><strong>점수를 실제 과거 데이터로 분해 검증</strong><p>5·20·60 거래일 forward 결과, excess return, MFE·MAE, 최대낙폭, 실현변동성, Spearman, non-overlap, Bootstrap, 종목 동일가중, Leave-one-symbol-out 등을 추가했습니다.</p></div>
+
+    <div class="tl"><span class="tl-dot"></span><div class="tl-version">v2.2 · AI 효율화</div><strong>종목별 Gate·Cache·Single-flight</strong><p>작은 변화만 있을 때는 불필요한 AI 재호출을 생략하고, 같은 종목·같은 상태의 동시 요청을 하나로 합치는 구조로 개선했습니다. 최신 정량 값은 Python 결과를 사용하고 AI 설명은 필요한 경우에만 갱신합니다.</p></div>
+
+    <div class="tl"><span class="tl-dot"></span><div class="tl-version">v2.3 · Technical Edge Research</div><strong>구성요소와 가중치를 따로 진단</strong><p>Trend, Momentum, Relative Strength, Participation, Setup을 시장별로 분해하고 후보 가중치와 Gate를 비교했습니다. 평균이 개선된 후보도 중앙값·동일가중·꼬리 의존성 기준을 통과하지 못하면 기각했습니다.</p></div>
+
+    <div class="tl"><span class="tl-dot"></span><div class="tl-version">v2.4 · Raw Feature Validation</div><strong>지표 자체의 독립성과 중복성까지 재검토</strong><p>RSI, 이동평균, MACD, Breakout, Bollinger 위치, 상대강도 등 원시 기술특성을 다시 살펴보고 “지표가 많다 = 정보가 많다”는 가정을 경계했습니다.</p></div>
+
+    <div class="tl"><span class="tl-dot"></span><div class="tl-version">v2.5 · Morning Briefing</div><strong>매일 08:00 관심종목 자동 요약</strong><p>사용자 수가 아니라 고유 종목 수 기준으로 분석하고, 국내·미국 혼합 관심종목과 이전 상태 비교를 지원합니다. 기본 브리핑은 Python-only로 구성해 AI 호출 없이도 동작합니다.</p></div>
+
+    <div class="tl"><span class="tl-dot"></span><div class="tl-version">v2.6 · Automatic Change Detection</div><strong>중요한 기술 변화만 자동 알림</strong><p>장중 15분 주기로 열린 시장의 관심종목을 감시하고 Edge 65/80 돌파, 판단·Risk·Relative Strength·Trend·Momentum 변화를 감지합니다. Hysteresis와 120분 Cooldown으로 경계값 근처의 반복 알림을 줄였습니다.</p></div>
+  </div>
+</section>
+
+<section class="card" id="architecture">
+  <h2>정량 계산과 AI 해석을 분리합니다</h2>
+  <p class="lead">AI에게 모든 판단을 맡기는 구조가 아니라, 숫자는 Python이 계산하고 AI는 설명을 보조합니다.</p>
+  <div class="core">
+    <div><strong class="blue">Technical Edge</strong><span>추세, Momentum, Relative Strength, Participation, Setup 등을 종합한 기술적 우위 점수</span></div>
+    <div><strong class="orange">Technical Risk</strong><span>변동성, 불리한 가격 움직임과 하락 위험을 별도로 평가하는 위험도</span></div>
+    <div><strong class="green">Confidence</strong><span>상승확률이 아니라 현재 분석에 사용된 데이터의 품질과 신뢰도</span></div>
+  </div>
+  <div class="flow" style="margin-top:18px">
+    <div class="flow-item"><strong>시장·종목 데이터</strong><span>가격·캔들·시장지수</span></div><div class="flow-arrow">→</div>
+    <div class="flow-item"><strong>Python 정량 엔진</strong><span>지표·Edge·Risk·Confidence</span></div><div class="flow-arrow">→</div>
+    <div class="flow-item"><strong>뉴스 / AI 해석</strong><span>필요한 경우 문맥 정리</span></div><div class="flow-arrow">→</div>
+    <div class="flow-item"><strong>Telegram</strong><span>최종 브리핑 전달</span></div>
+  </div>
+  <div class="notice good"><strong>핵심 원칙</strong><br>AI가 Technical Edge나 Risk 점수를 임의로 덮어쓰지 않습니다. 핵심 정량 값은 Python이 계산한 결과를 그대로 사용합니다.</div>
+</section>
+
+<section class="card" id="validation">
+  <h2>검증 체계와 데이터 분리 원칙</h2>
+  <p class="lead">좋은 평균 수익률 하나보다 “그 결과가 특정 종목·특정 기간·몇 개의 큰 수익에 의존한 것은 아닌가?”를 먼저 확인하도록 검증 단계를 설계했습니다.</p>
+
+  <div class="metrics">
+    <div class="metric"><strong>100종목</strong><span>Technical Edge 개발·진단 데이터</span><span class="tiny">KOSPI + KOSDAQ + US Tech + US Non-Tech</span></div>
+    <div class="metric"><strong>108,234</strong><span>Development observations</span><span class="tiny">이미 결과를 확인한 데이터는 development로 명시</span></div>
+    <div class="metric"><strong>50종목</strong><span>별도 Unseen universe</span><span class="tiny">기존 100종목과 symbol overlap 0</span></div>
+    <div class="metric"><strong>54,030</strong><span>External-validation observations</span><span class="tiny">외부 검증 후에는 다시 unseen이라 부르지 않음</span></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">Development Dataset 구성</div>
+    <div class="chart-sub">시장 한 곳의 결과에만 의존하지 않도록 한국과 미국, 기술주와 비기술주를 나누어 확인했습니다.</div>
+    <div class="bar-row"><div class="bar-label">KOSPI</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">32,070</div></div>
+    <div class="bar-row"><div class="bar-label">US Tech</div><div class="bar-track"><div class="bar-fill" style="width:89%"></div></div><div class="bar-value">28,548</div></div>
+    <div class="bar-row"><div class="bar-label">KOSDAQ</div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><div class="bar-value">25,656</div></div>
+    <div class="bar-row"><div class="bar-label">US Non-Tech</div><div class="bar-track"><div class="bar-fill" style="width:68%"></div></div><div class="bar-value">21,960</div></div>
+  </div>
+
+  <h3>한 번의 백테스트로 끝내지 않는 이유</h3>
+  <div class="validation-flow">
+    <div class="vstep"><div class="n">STEP 1</div><strong>Point-in-time</strong><span>분석 시점 이후의 미래 캔들을 feature 계산에 사용하지 않습니다.</span></div>
+    <div class="vstep"><div class="n">STEP 2</div><strong>Trading-day Horizon</strong><span>5·20·60일은 달력일이 아니라 실제 거래 관측치 기준입니다.</span></div>
+    <div class="vstep"><div class="n">STEP 3</div><strong>Non-overlap</strong><span>겹치는 기간이 표본 수를 과장하지 않는지 별도로 확인합니다.</span></div>
+    <div class="vstep"><div class="n">STEP 4</div><strong>Bootstrap CI</strong><span>평균값 하나가 아니라 결과의 불확실성 범위를 함께 봅니다.</span></div>
+    <div class="vstep"><div class="n">STEP 5</div><strong>Tail Dependency</strong><span>상위 1%·5% 수익 관측치가 전체 평균을 끌어올리는지 확인합니다.</span></div>
+    <div class="vstep"><div class="n">STEP 6</div><strong>Symbol Equal-weight</strong><span>관측치가 많은 특정 종목이 결과를 지배하지 않도록 종목별 동일가중도 비교합니다.</span></div>
+    <div class="vstep"><div class="n">STEP 7</div><strong>Leave-one-symbol-out</strong><span>영향력이 큰 종목 하나를 제거해도 결과의 방향이 유지되는지 확인합니다.</span></div>
+    <div class="vstep"><div class="n">STEP 8</div><strong>Unseen Universe</strong><span>기존 universe와 겹치지 않는 50종목을 따로 검증했습니다.</span></div>
+  </div>
+
+  <div class="notice"><strong>검증 결과가 좋지 않아도 그대로 기록합니다.</strong><br>완전 비중복 외부검증의 전체 Technical Edge 판정은 <strong>NOT_VALIDATED</strong>였습니다. 반면 KOSDAQ 효과는 별도 universe에서도 재현됐고, Risk는 위험도 순서가 실제 MAE·낙폭·변동성과 함께 증가하는 방향으로 다시 확인됐습니다. 이 차이를 구분해 공개합니다.</div>
+
+  <div class="table-wrap"><table>
+    <thead><tr><th>검증 항목</th><th>결과</th><th>해석</th></tr></thead>
+    <tbody>
+      <tr><td>전체 Technical Edge 외부검증</td><td><span class="tag tag-reject">NOT_VALIDATED</span></td><td>KOSPI와 미국 비기술주, equal-weight, block CI 등을 종합하면 전체 시장 공통 신호로 확정하기에는 근거가 부족했습니다.</td></tr>
+      <tr><td>KOSDAQ expanded validation</td><td><span class="tag tag-pass">REPLICATED</span></td><td>새로운 KOSDAQ 20종목에서도 주요 평균 방향이 양수로 유지됐습니다.</td></tr>
+      <tr><td>Technical Risk</td><td><span class="tag tag-pass">PASS</span></td><td>Risk가 높아질수록 MAE, 최대낙폭, 실현변동성이 증가했습니다.</td></tr>
+      <tr><td>Confidence</td><td><span class="tag tag-warn">INSUFFICIENT VARIATION</span></td><td>Historical EOD 데이터에서 값의 변화가 충분하지 않아 예측력 판단을 보류했습니다.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="chart-card">
+    <div class="chart-title">Risk Score 검증 예시</div>
+    <div class="chart-sub">Historical robustness dataset에서 Risk 구간이 높아질수록 downside MAE와 실현변동성이 함께 증가했습니다.</div>
+    <div class="svg-wrap">
+      <svg class="risk-svg" viewBox="0 0 760 310" role="img" aria-label="Risk별 NMAE와 실현변동성 증가 그래프">
+        <line x1="72" y1="252" x2="720" y2="252" stroke="#cbd5e1" stroke-width="2"/>
+        <line x1="72" y1="40" x2="72" y2="252" stroke="#cbd5e1" stroke-width="2"/>
+        <text x="70" y="278" font-size="12" fill="#64748b">Low</text><text x="333" y="278" font-size="12" fill="#64748b">Medium</text><text x="642" y="278" font-size="12" fill="#64748b">High</text>
+        <polyline points="95,226 355,205 665,198" fill="none" stroke="#2563eb" stroke-width="4"/>
+        <circle cx="95" cy="226" r="6" fill="#2563eb"/><circle cx="355" cy="205" r="6" fill="#2563eb"/><circle cx="665" cy="198" r="6" fill="#2563eb"/>
+        <text x="82" y="214" font-size="12" fill="#1d4ed8">5.95%</text><text x="340" y="193" font-size="12" fill="#1d4ed8">9.25%</text><text x="648" y="186" font-size="12" fill="#1d4ed8">10.32%</text>
+        <polyline points="95,185 355,118 665,68" fill="none" stroke="#d97706" stroke-width="4"/>
+        <circle cx="95" cy="185" r="6" fill="#d97706"/><circle cx="355" cy="118" r="6" fill="#d97706"/><circle cx="665" cy="68" r="6" fill="#d97706"/>
+        <text x="78" y="171" font-size="12" fill="#b45309">28.97%</text><text x="337" y="104" font-size="12" fill="#b45309">49.08%</text><text x="648" y="54" font-size="12" fill="#b45309">68.84%</text>
+        <rect x="470" y="288" width="12" height="4" fill="#2563eb"/><text x="488" y="295" font-size="11" fill="#475569">NMAE</text><rect x="550" y="288" width="12" height="4" fill="#d97706"/><text x="568" y="295" font-size="11" fill="#475569">Realized volatility</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="actions">
+    <a class="btn ghost" href="validation_summary.csv" target="_blank" rel="noopener noreferrer">검증 요약 CSV 열기</a>
+  </div>
+  <p class="note">CSV에는 개발 데이터 규모, 외부검증 판정, Calibration 후보 기각, Risk 검증, robustness 주요 수치와 테스트 정보를 구조화해 공개합니다.</p>
+</section>
+
+<section class="card" id="calibration">
+  <h2>Calibration 설계와 채택 기준</h2>
+  <p class="lead">Calibration의 목적은 과거 수익률을 최대화하는 것이 아니라, 기존 점수보다 일관되게 나은 후보가 있는지 보수적으로 확인하는 것입니다.</p>
+
+  <div class="principles">
+    <div class="principle"><strong>시간순 분리</strong><span>개발 단계에서 60/20/20 형태의 시간순 분리를 사용하고, test 결과를 후보 선택에 다시 사용하지 않도록 설계했습니다.</span></div>
+    <div class="principle"><strong>여러 기준을 동시에 통과</strong><span>평균만 좋아지는 후보는 채택하지 않습니다. 중앙값, non-overlap, symbol equal-weight, tail dependency 등을 함께 봅니다.</span></div>
+    <div class="principle"><strong>단순한 후보만 비교</strong><span>종목별·세부 업종별 과도한 튜닝이나 소수점 threshold 최적화를 피하고 설명 가능한 범위에서만 후보를 비교했습니다.</span></div>
+    <div class="principle"><strong>기준 미달 후보는 실제로 기각</strong><span>일부 성과가 좋아져도 사전 정의한 개선 조건을 충분히 충족하지 못하면 Production에 반영하지 않았습니다.</span></div>
+  </div>
+
+  <div class="table-wrap"><table>
+    <thead><tr><th>후보</th><th>주요 변경</th><th>개선 조건</th><th>판정</th></tr></thead>
+    <tbody>
+      <tr><td>Candidate A</td><td>Relative Strength 비중 확대 등 단순 weight 재배치</td><td>2 / 6</td><td><span class="tag tag-reject">REJECT</span></td></tr>
+      <tr><td>Candidate B</td><td>Candidate A + 과열/참여도 관련 Edge cap</td><td>2 / 6</td><td><span class="tag tag-reject">REJECT</span></td></tr>
+      <tr><td>Candidate C</td><td>KR/US 지역 단위의 제한적 weight 조정</td><td>3 / 6</td><td><span class="tag tag-reject">REJECT</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="decision">
+    <div><strong>후보 설계</strong><span>단순·설명 가능한 변경</span></div>
+    <div><strong>Development 비교</strong><span>평균 + 중앙값 + non-overlap</span></div>
+    <div><strong>강건성 확인</strong><span>Equal-weight + Tail + CI</span></div>
+    <div class="reject"><strong>기준 미달</strong><span>A/B/C 모두 기각</span></div>
+    <div class="keep"><strong>Production 유지</strong><span>기존 65 / 80 기준 유지</span></div>
+  </div>
+
+  <div class="notice warn"><strong>“더 좋아 보이는 후보”와 “배포할 수 있는 후보”를 구분합니다.</strong><br>Candidate C는 일부 평균·60일 결과가 개선됐지만 중앙값, symbol equal-weight, tail dependency를 함께 보면 충분한 개선으로 판단하기 어려웠습니다. 따라서 <strong>NO_CANDIDATE_READY</strong>로 결론 내리고 Production Technical Edge를 변경하지 않았습니다.</div>
+</section>
+
+<section class="card">
+  <h2>검증 결과를 해석하는 방식</h2>
+  <div class="proof">
+    <div><strong>좋은 결과만 골라서 보여주지 않습니다</strong><span>외부검증 전체 판정이 NOT_VALIDATED였다는 점도 같이 공개합니다.</span></div>
+    <div><strong>한 시장의 강한 결과를 전체 시장으로 확대하지 않습니다</strong><span>KOSDAQ에서 재현된 효과와 KOSPI·미국 결과를 분리해 해석합니다.</span></div>
+    <div><strong>데이터를 본 순간부터 역할을 바꿉니다</strong><span>한 번 결과를 확인한 unseen universe는 더 이상 pristine test로 재사용하지 않고 Development Dataset으로 명시합니다.</span></div>
+  </div>
+  <div class="notice violet"><strong>다음 단계는 Live Out-of-Sample입니다.</strong><br>앞으로는 실제 분석 시점의 Edge, Risk, 시장 상태와 가격을 먼저 기록하고, 5·20·60 거래일이 지난 뒤 실제 결과를 붙이는 방식으로 검증 데이터를 축적할 예정입니다. 충분한 새 표본이 쌓이기 전에는 다시 Calibration을 서두르지 않습니다.</div>
+</section>
+
+<section class="card" id="automation">
+  <h2>v2.5~v2.6 자동화 기능</h2>
+  <p class="lead">자동화는 “더 자주 메시지를 보내는 것”보다, 중복 분석과 불필요한 호출을 줄이면서 필요한 변화만 전달하는 방향으로 설계했습니다.</p>
+
+  <h3>Morning Briefing · 08:00 KST</h3>
+  <ul>
+    <li>사용자별 관심종목을 모아 고유 symbol 기준으로 한 번만 분석합니다.</li>
+    <li>한국과 미국 종목이 섞여 있어도 각 시장 데이터 기준일과 통화를 구분합니다.</li>
+    <li>첫 실행은 비교 기준만 만들고, 이후부터 Edge·Risk·판단·기술신호 변화를 비교합니다.</li>
+    <li>기본 브리핑은 Python-only로 생성합니다.</li>
+  </ul>
+
+  <h3>Automatic Change Detection · 15분</h3>
+  <ul>
+    <li>현재 열린 시장의 관심종목만 감시합니다.</li>
+    <li>Edge 65/80 상·하향 돌파, 판단, Risk, Relative Strength, Trend, Momentum의 의미 있는 변화를 감지합니다.</li>
+    <li>Hysteresis 3점과 동일 이벤트 120분 Cooldown으로 경계값 근처 반복 알림을 억제합니다.</li>
+    <li>한 cycle에서 여러 변화가 발생해도 사용자당 한 번의 batch 메시지로 묶습니다.</li>
+    <li>사용자가 직접 <strong>/alerts_on</strong>으로 활성화하며 기본값은 OFF입니다.</li>
+  </ul>
+
+  <h3>AI 결과 재사용과 호출 절감</h3>
+  <p>같은 종목의 정량 상태, 글로벌 시장 정보, 중요 뉴스가 변하지 않으면 이전 결과를 적극 재사용합니다. 사용자마다 같은 종목을 다시 분석하는 구조가 아니라 공용 캐시와 종목 단위 Gate를 활용해 반복 AI 호출을 줄입니다.</p>
+</section>
+
+<section class="summary">
+  <h2>핵심 요약</h2>
+  <p>1. AI STOCK BRIEF는 Python 정량 계산과 AI 설명을 분리하고, 국내·미국 시장을 함께 분석합니다.</p>
+  <p>2. Technical Edge는 백테스트·강건성·비중복 외부검증·Calibration 후보 비교를 거쳤고, 기준을 못 넘은 후보는 실제 서비스에 적용하지 않았습니다.</p>
+  <p>3. v2.5~v2.6에서는 모닝 브리핑과 자동 변화 감지를 추가하되, 고유 종목 재사용·캐시·Cooldown으로 비용과 알림 노이즈를 함께 줄였습니다.</p>
+</section>
+
+<section class="card" id="guide">
+  <h2>사용 방법</h2>
+  <div class="steps">
+    <div class="step"><span class="num">1</span><strong>텔레그램 봇 시작</strong><p>아래 링크에서 AI STOCK BRIEF를 시작합니다.</p><a class="btn primary" href="https://t.me/crackuser_bot" target="_blank" rel="noopener noreferrer">Telegram 열기</a></div>
+    <div class="step"><span class="num">2</span><strong>관심종목 등록</strong><p>국내주식은 종목명·종목코드, 미국주식은 종목명·티커를 사용할 수 있습니다.</p></div>
+    <div class="step"><span class="num">3</span><strong>/analyze</strong><p>등록한 관심종목의 정량 분석, 뉴스와 AI 해석을 확인합니다.</p></div>
+    <div class="step"><span class="num">4</span><strong>/us / 자동알림</strong><p>/us로 미국시장 정보를 확인하고, /alerts_on으로 자동 변화 알림을 선택적으로 켤 수 있습니다.</p></div>
+  </div>
+
+  <h3>명령 예시</h3>
+  <div class="code">/추가 삼성전자<br>/add SK하이닉스<br>/add NVDA<br>/analyze<br>/us<br>/alerts_on<br>/alerts_off<br>/alerts_status</div>
+</section>
+
+<section class="card" id="manual">
+  <h2>분석 항목 설명</h2>
+  <p class="lead">처음 보는 분은 Technical Edge, Risk, Relative Strength, 뉴스·AI 해석 정도부터 확인하면 됩니다.</p>
+
+  <details open><summary>Technical Edge</summary><div><p>현재 차트와 시장 데이터를 종합해 기술적으로 얼마나 유리한 조건이 겹쳐 있는지를 0~100점으로 표현합니다. <strong>상승확률 80% 같은 확률 값이 아닙니다.</strong></p><div class="table-wrap"><table><tbody><tr><td>80 이상</td><td>강한 매수우위</td></tr><tr><td>65~79</td><td>매수우위</td></tr><tr><td>45~64</td><td>중립</td></tr><tr><td>30~44</td><td>매도우위</td></tr><tr><td>30 미만</td><td>강한 매도우위</td></tr></tbody></table></div></div></details>
+
+  <details><summary>Technical Risk</summary><div><p>Edge와 별도로 현재 종목의 변동성과 downside 위험을 평가합니다.</p><ul><li>0~34: 낮음</li><li>35~64: 보통</li><li>65~100: 높음</li></ul><p>Historical robustness 검증에서는 Risk가 높아질수록 MAE, 최대낙폭, 실현변동성이 함께 증가했습니다.</p></div></details>
+
+  <details><summary>Confidence</summary><div><p>종목의 상승 가능성이 아니라 현재 분석에 사용된 데이터의 품질과 신뢰도를 나타냅니다. Historical EOD 연구에서는 값의 variation이 충분하지 않아 독립적인 예측력 판단은 보류했습니다.</p></div></details>
+
+  <details><summary>Relative Strength / Benchmark</summary><div><p>종목이 올랐는지만 보는 것이 아니라 해당 시장이나 benchmark보다 더 강했는지를 비교합니다. 예를 들어 종목 +15%, benchmark +5%라면 상대성과는 +10%p입니다.</p></div></details>
+
+  <details><summary>RSI / MACD / Momentum</summary><div><p>RSI와 MACD는 현재 가격 움직임의 힘과 방향을 참고하는 지표입니다. v2.3~v2.4 연구에서는 한 지표가 모든 시장에서 일관되게 유효하다고 가정하지 않고 시장별 차이와 중복성을 따로 확인했습니다.</p></div></details>
+
+  <details><summary>Trend / 이동평균 / Setup</summary><div><p>현재가와 MA20·MA60·MA120의 위치, 추세 방향, 최근 고저점, Bollinger 위치, Breakout 등 가격 구조를 함께 봅니다. Setup은 독립 예측력이 약하거나 역방향으로 나타난 구간도 있어 다른 요소와 함께 해석합니다.</p></div></details>
+
+  <details><summary>뉴스 + AI 종합 해석</summary><div><p>정량 결과와 최근 주요 뉴스를 사람이 빠르게 읽을 수 있도록 정리합니다. 핵심 점수는 AI가 새로 만드는 것이 아니라 Python 계산 결과를 사용합니다.</p></div></details>
+</section>
+
+<section class="card" id="notice">
+  <h2>이용 안내</h2>
+  <div class="notice warn"><strong>AI STOCK BRIEF는 투자 결과를 보장하는 시스템이 아닙니다.</strong><br>Technical Edge와 Risk를 포함한 모든 지표는 시장 데이터를 빠르게 정리하고 판단을 보조하기 위한 정보입니다. 실제 투자 결정은 사용자가 직접 내려야 합니다.</div>
+  <p>특히 백테스트와 외부검증 결과는 미래 성과를 보장하지 않습니다. 이 프로젝트는 검증 결과가 기대와 다를 때도 숨기지 않고, 충분한 근거가 없는 변경은 Production에 적용하지 않는 방향으로 계속 개선하고 있습니다.</p>
+  <div class="actions"><a class="btn primary" href="https://t.me/crackuser_bot" target="_blank" rel="noopener noreferrer">AI STOCK BRIEF 사용하기</a><a class="btn ghost" href="validation_summary.csv" target="_blank" rel="noopener noreferrer">검증 요약 CSV</a></div>
+</section>
+
+<footer class="footer"><strong>AI STOCK BRIEF v2.6</strong><br>Quantitative Market Analysis · Validation · AI Interpretation<br><span class="url">https://t.me/crackuser_bot</span></footer>
+
 </div>
 </body>
 </html>
