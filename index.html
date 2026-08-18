@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AI STOCK BRIEF v2.7.1 - 국내외 시장과 관심종목을 정량 분석하고 모닝 브리핑, 자동 변화 감지, Live Out-of-Sample Validation으로 검증하는 텔레그램 주식 브리핑 봇">
+  <meta name="description" content="AI STOCK BRIEF v2.7.2 - 국내외 시장과 관심종목을 정량 분석하고 모닝 브리핑, 자동 변화 감지, 뉴스 원문 확인, Live Out-of-Sample Validation을 제공하는 텔레그램 주식 브리핑 봇">
   <meta name="theme-color" content="#0f172a">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://fixie-aibot.github.io/ai-stock-brief/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ko_KR">
   <meta property="og:site_name" content="AI STOCK BRIEF">
-  <meta property="og:title" content="AI STOCK BRIEF v2.7.1 | 국내외 주식 브리핑">
-  <meta property="og:description" content="국내외 시장과 관심종목을 정량 분석하고, 모닝 브리핑·장중 변화 감지·Live OOS 검증을 제공합니다.">
+  <meta property="og:title" content="AI STOCK BRIEF v2.7.2 | 국내외 주식 브리핑">
+  <meta property="og:description" content="국내외 시장과 관심종목을 정량 분석하고, 모닝 브리핑·장중 변화 감지·뉴스 확인·Live OOS 검증을 제공합니다.">
   <meta property="og:url" content="https://fixie-aibot.github.io/ai-stock-brief/">
-  <title>AI STOCK BRIEF v2.7.1 | 국내외 주식 브리핑</title>
+  <title>AI STOCK BRIEF v2.7.2 | 국내외 주식 브리핑</title>
   <style>
     :root{--ink:#0f172a;--text:#1f2937;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--green:#059669;--amber:#d97706;--violet:#7c3aed;--bg:#f4f7fb;--card:#fff;--soft:#f8fafc}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:'Malgun Gothic','Noto Sans KR','Apple SD Gothic Neo',Arial,sans-serif;line-height:1.7;word-break:keep-all;overflow-wrap:break-word}a{color:inherit}.page{max-width:1080px;margin:auto;padding:26px 18px 60px}
-    .hero{background:linear-gradient(135deg,#0f172a 0%,#172554 62%,#1e3a8a 100%);color:#fff;padding:46px 38px;border-radius:22px;box-shadow:0 20px 50px rgba(15,23,42,.16)}.hero-top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.brand{font-size:13px;font-weight:900;letter-spacing:.08em;color:#bfdbfe}.status{font-size:12px;font-weight:800;padding:6px 10px;border:1px solid rgba(255,255,255,.15);border-radius:999px;color:#dbeafe;background:rgba(255,255,255,.08)}.hero h1{font-size:38px;line-height:1.3;margin:14px 0 11px;letter-spacing:-.025em}.hero p{font-size:16px;color:#dbe4f0;max-width:820px;margin:0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.btn{display:inline-block;padding:11px 17px;border-radius:9px;text-decoration:none;font-weight:900;border:1px solid transparent}.btn-primary{background:#2563eb;color:#fff}.btn-light{background:#fff;color:#111827}.btn-soft{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
+    .hero{background:linear-gradient(135deg,#0f172a 0%,#172554 62%,#1e3a8a 100%);color:#fff;padding:46px 38px;border-radius:22px;box-shadow:0 20px 50px rgba(15,23,42,.16)}.hero-top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.brand{font-size:13px;font-weight:900;letter-spacing:.08em;color:#bfdbfe}.status{font-size:12px;font-weight:800;padding:6px 10px;border:1px solid rgba(255,255,255,.15);border-radius:999px;color:#dbeafe;background:rgba(255,255,255,.08)}.hero h1{font-size:38px;line-height:1.3;margin:14px 0 11px;letter-spacing:-.025em}.hero p{font-size:16px;color:#dbe4f0;max-width:850px;margin:0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.btn{display:inline-block;padding:11px 17px;border-radius:9px;text-decoration:none;font-weight:900;border:1px solid transparent}.btn-primary{background:#2563eb;color:#fff}.btn-light{background:#fff;color:#111827}.btn-soft{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
     .nav{position:sticky;top:8px;z-index:10;display:flex;gap:15px;overflow-x:auto;margin-top:16px;padding:11px 15px;background:rgba(255,255,255,.96);border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 5px 18px rgba(15,23,42,.04)}.nav a{white-space:nowrap;text-decoration:none;font-size:13px;font-weight:800;color:#475569}.nav a:hover{color:#2563eb}.nav::-webkit-scrollbar{display:none}
     .card{scroll-margin-top:76px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;margin-top:18px}.card h2{font-size:25px;margin:0 0 12px;color:#0f172a;letter-spacing:-.02em}.card h3{font-size:18px;margin:22px 0 8px;color:#0f172a}.lead{margin-top:-2px;color:#64748b;font-size:14px}
-    .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.q{padding:17px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc}.q strong{display:block;color:#0f172a;margin-bottom:4px}.q span{font-size:13px;color:#64748b}.inline-review{display:inline-block;padding:2px 8px;border-radius:999px;background:#fef3c7;color:#92400e;font-size:11px;font-weight:900;vertical-align:1px}
-    .dev-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}.dev-hint{font-size:12px;color:#64748b}.dev-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:5px 2px 14px;scroll-snap-type:x proximity}.dev-wrap::-webkit-scrollbar{height:7px}.dev-wrap::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:999px}.dev-row{display:flex;gap:10px;width:max-content;min-width:100%;align-items:stretch}.dev{position:relative;width:245px;min-height:178px;flex:0 0 245px;padding:18px;border:1px solid #dbe4ea;border-radius:14px;background:#f8fafc;scroll-snap-align:start}.dev-v{font-size:12px;font-weight:900;color:#2563eb;margin-bottom:6px}.dev strong{display:block;font-size:16px;color:#0f172a;margin-bottom:6px}.dev p{margin:0;font-size:13px;color:#64748b}.dev.current{border-color:#93c5fd;background:#eff6ff}.dev.building{border:2px solid #a78bfa;background:linear-gradient(145deg,#faf5ff,#ede9fe);box-shadow:0 10px 28px rgba(124,58,237,.14)}.dev.building .dev-v{color:#7c3aed}.badge{position:absolute;top:12px;right:12px;font-size:10px;font-weight:900;padding:4px 7px;border-radius:999px}.badge-now{background:#dbeafe;color:#1d4ed8}.badge-next{background:#7c3aed;color:#fff}.badge-check{background:#f59e0b;color:#fff}.dev.review{border-color:#fbbf24;background:#fffbeb}.dev.review .dev-v{color:#b45309}.release-v.review{color:#92400e;background:#fef3c7}.dev-arrow{display:flex;align-items:center;justify-content:center;min-width:22px;color:#94a3b8;font-weight:900;font-size:21px}
+    .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.q{padding:17px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc}.q strong{display:block;color:#0f172a;margin-bottom:4px}.q span{font-size:13px;color:#64748b}
+    .dev-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}.dev-hint{font-size:12px;color:#64748b}.dev-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:5px 2px 14px;scroll-snap-type:x proximity}.dev-wrap::-webkit-scrollbar{height:7px}.dev-wrap::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:999px}.dev-row{display:flex;gap:10px;width:max-content;min-width:100%;align-items:stretch}.dev{position:relative;width:245px;min-height:178px;flex:0 0 245px;padding:18px;border:1px solid #dbe4ea;border-radius:14px;background:#f8fafc;scroll-snap-align:start}.dev-v{font-size:12px;font-weight:900;color:#2563eb;margin-bottom:6px}.dev strong{display:block;font-size:16px;color:#0f172a;margin-bottom:6px}.dev p{margin:0;font-size:13px;color:#64748b}.dev.current{border-color:#93c5fd;background:#eff6ff}.dev.building{border:2px solid #a78bfa;background:linear-gradient(145deg,#faf5ff,#ede9fe);box-shadow:0 10px 28px rgba(124,58,237,.14)}.dev.building .dev-v{color:#7c3aed}.badge{position:absolute;top:12px;right:12px;font-size:10px;font-weight:900;padding:4px 7px;border-radius:999px}.badge-now{background:#dbeafe;color:#1d4ed8}.badge-next{background:#7c3aed;color:#fff}.dev-arrow{display:flex;align-items:center;justify-content:center;min-width:22px;color:#94a3b8;font-weight:900;font-size:21px}
     .release-panel{margin-top:16px;border:1px solid #dbe4ea;border-radius:12px;overflow:hidden;background:#fff}.release-panel>summary{cursor:pointer;padding:14px 17px;background:#f8fafc;font-weight:900;color:#0f172a}.release-content{padding:10px 17px 17px}.release{padding:17px 0;border-bottom:1px solid #e5e7eb}.release:last-child{border-bottom:0}.release-top{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:6px}.release-v{font-size:12px;font-weight:900;color:#2563eb;background:#eff6ff;padding:3px 8px;border-radius:999px}.release-v.devnow{color:#6d28d9;background:#f3e8ff}.release-title{font-weight:900;color:#0f172a}.release p{margin:5px 0 0;font-size:13px;color:#475569}.release ul{margin:8px 0 0;padding-left:20px;color:#475569;font-size:13px}.release li{margin:4px 0}
     .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}.metric{padding:16px;border:1px solid #e2e8f0;border-radius:11px;background:#f8fafc}.metric strong{display:block;font-size:21px;color:#0f172a}.metric span{font-size:12px;color:#64748b}.pipeline{display:flex;gap:7px;align-items:stretch;overflow-x:auto;padding:3px 1px 10px}.pipe{min-width:145px;padding:13px;border:1px solid #e2e8f0;border-radius:10px;background:#f8fafc}.pipe strong{display:block;font-size:13px;color:#0f172a}.pipe span{font-size:11px;color:#64748b}.arrow{display:flex;align-items:center;color:#94a3b8;font-weight:900}
     .notice{margin:16px 0;padding:16px 18px;border-left:4px solid #2563eb;background:#eff6ff;border-radius:4px 10px 10px 4px;font-size:14px}.good{border-left-color:#059669;background:#ecfdf5}.warn{border-left-color:#d97706;background:#fffbeb}.violet{border-left-color:#7c3aed;background:#f5f3ff}.alert-emphasis{margin-top:14px;padding:16px 18px;border:2px solid #f59e0b;border-radius:12px;background:#fffbeb;color:#78350f}.alert-emphasis strong{color:#92400e}.alert-emphasis code{font-weight:900;color:#1d4ed8;background:#fff;padding:2px 6px;border-radius:5px}
@@ -37,10 +37,10 @@
 <body>
 <div class="page">
   <section class="hero">
-    <div class="hero-top"><div class="brand">AI STOCK BRIEF v2.7.1</div><div class="status">정상 운영 중</div></div>
+    <div class="hero-top"><div class="brand">AI STOCK BRIEF v2.7.2</div><div class="status">정상 운영 중</div></div>
     <h1>국내외 시장과 관심종목을 한 번에 정리하는 주식 브리핑 봇</h1>
-    <p>시장 흐름, 관심종목의 Technical Edge·Risk·Confidence, 주요 기술지표와 뉴스를 정리해 텔레그램으로 전달합니다. 내부 점검 중 잠시 중지했던 서비스는 검증 후 정상 운영 중이며, 국내 종목 60일 상대강도와 Live OOS 추적을 한층 보강했습니다. 모닝 브리핑은 별도 일관성 점검 중입니다.</p>
-    <div class="actions"><a class="btn btn-primary" href="https://t.me/crackuser_bot" target="_blank" rel="noopener noreferrer">봇 사용하기</a><a class="btn btn-light" href="#guide">사용 방법</a></div>
+    <p>시장 흐름, 관심종목의 Technical Edge·Risk·Confidence, 주요 기술지표와 뉴스를 텔레그램으로 정리합니다. v2.7.2에서는 일반 종목분석과 모닝 브리핑의 분석 기준을 통일하고, 중요 뉴스의 요약·기사 바로보기, 반복 분석 응답 효율, Live OOS 검증 안정성을 보강했습니다.</p>
+    <div class="actions"><a class="btn btn-light" href="#guide">사용 방법</a><a class="btn btn-primary" href="https://t.me/crackuser_bot" target="_blank" rel="noopener noreferrer">봇 사용하기</a></div>
   </section>
 
   <nav class="nav">
@@ -52,66 +52,79 @@
     <div class="quick">
       <div class="q"><strong>시장 브리핑</strong><span>KOSPI·KOSDAQ·NASDAQ·S&amp;P 500·SOX·VIX·환율·원자재 흐름을 정리합니다.</span></div>
       <div class="q"><strong>관심종목 분석</strong><span>Technical Edge·Risk·Confidence와 주요 기술신호를 분리해 보여줍니다.</span></div>
-      <div class="q"><strong>모닝 브리핑 · <span class="inline-review">🟠 점검중</span></strong><span>자동 브리핑 기능은 구현 완료 상태이며, 일반 분석과 같은 데이터 기준을 사용하도록 최종 일관성 점검 중입니다.</span></div>
-      <div class="q"><strong>장중 변화 감지</strong><span>정규장 중 15분 단위로 의미 있는 Edge·Risk·RS·Trend 변화를 확인합니다. 사용자 본인이 알림을 켠 경우에만 발송됩니다.</span></div>
-      <div class="q"><strong>뉴스 + AI 해석</strong><span>정량값은 Python이 계산하고 AI는 필요한 설명을 읽기 쉽게 정리합니다.</span></div>
+      <div class="q"><strong>모닝 브리핑</strong><span>매일 아침 관심종목의 현재 상태와 이전 결과 대비 주요 변화를 일반 종목분석과 동일한 정량 기준으로 정리합니다.</span></div>
+      <div class="q"><strong>장중 변화 감지</strong><span>정규장 중 15분 단위로 의미 있는 Edge·Risk·RS·Trend 변화를 확인합니다. 사용자가 알림을 켠 경우에만 발송됩니다.</span></div>
+      <div class="q"><strong>뉴스 + AI 해석</strong><span>주요 뉴스의 제목과 수집된 요약 정보를 함께 참고하고, 분석 카드에서 기사 보기를 눌러 관련 기사를 바로 확인할 수 있습니다.</span></div>
     </div>
   </section>
 
   <section class="card" id="history">
-    <div class="dev-head"><div><h2>개발현황</h2><p class="lead">분석 정확도와 검증 신뢰도를 높이고, 사용자가 필요한 정보를 더 빠르고 자동으로 받아볼 수 있도록 지속적으로 발전시키고 있습니다.</p></div><div class="dev-hint">이전 버전 보기 →</div></div>
+    <div class="dev-head"><div><h2>개발현황</h2><p class="lead">분석 정확도와 검증 신뢰도를 높이고, 사용자가 필요한 정보를 더 빠르고 편하게 확인할 수 있도록 지속적으로 발전시키고 있습니다.</p></div><div class="dev-hint">이전 버전 보기 →</div></div>
     <div class="dev-wrap" aria-label="AI STOCK BRIEF 개발현황"><div class="dev-row">
-      <div class="dev building"><span class="badge badge-next">다음 연구</span><div class="dev-v">NEXT</div><strong>KOSPI Edge Research</strong><p>시장별 유효성 차이를 바탕으로 KOSPI의 raw feature, 상대순위 기반 Edge, market regime 조건을 별도 연구할 계획입니다.</p></div><div class="dev-arrow">←</div>
-      <div class="dev current"><span class="badge badge-now">현재</span><div class="dev-v">v2.7.1</div><strong>OOS Integrity &amp; KR RS60</strong><p>Live OOS의 버전 추적과 국내 종목 60일 상대강도 계산을 보강했습니다. 내부 점검 후 현재 서비스는 정상 운영 중입니다.</p></div><div class="dev-arrow">←</div>
-      <div class="dev"><div class="dev-v">v2.7</div><strong>Live OOS Validation</strong><p>실제 분석 시점의 값을 고정해 저장하고, 미래 5·20·60 거래일이 지난 뒤 성과를 평가하는 Live 검증을 운영에 추가했습니다.</p></div><div class="dev-arrow">←</div>
+      <div class="dev building"><span class="badge badge-next">다음 연구</span><div class="dev-v">NEXT</div><strong>KOSPI Edge Research</strong><p>시장별 유효성 차이를 바탕으로 KOSPI에서 더 유효한 Technical Edge 개선 방향을 별도로 연구할 계획입니다.</p></div><div class="dev-arrow">←</div>
+      <div class="dev current"><span class="badge badge-now">현재</span><div class="dev-v">v2.7.2</div><strong>Consistency · News · OOS</strong><p>일반 분석과 모닝 브리핑의 기준을 통일하고, 뉴스 확인 편의성과 반복 분석 효율, Live OOS 검증 안정성을 보강했습니다.</p></div><div class="dev-arrow">←</div>
+      <div class="dev"><div class="dev-v">v2.7.1</div><strong>OOS Integrity &amp; KR RS60</strong><p>국내 종목의 60일 상대강도 계산과 Live OOS 추적 안정성을 보강했습니다.</p></div><div class="dev-arrow">←</div>
+      <div class="dev"><div class="dev-v">v2.7</div><strong>Live OOS Validation</strong><p>실제 분석 시점의 결과를 저장하고, 미래 5·20·60 거래일이 지난 뒤 성과를 확인하는 Live 검증을 추가했습니다.</p></div><div class="dev-arrow">←</div>
       <div class="dev"><div class="dev-v">v2.6</div><strong>Automatic Change Detection</strong><p>장중 15분 단위로 의미 있는 Edge·Risk·RS·Trend 변화를 확인하고 사용자 opt-in 방식으로 알립니다.</p></div><div class="dev-arrow">←</div>
-      <div class="dev review"><span class="badge badge-check">점검 중</span><div class="dev-v">v2.5</div><strong>Morning Briefing</strong><p>자동 브리핑 기능은 구현 완료 상태이며, 일반 분석과 같은 데이터 기준·판단 결과가 유지되도록 최종 일관성 점검을 진행하고 있습니다.</p></div><div class="dev-arrow">←</div>
-      <div class="dev"><div class="dev-v">v2.4</div><strong>Raw Feature 검증</strong><p>RSI·MACD·거래량·Breakout·이동평균 구조를 원시 feature 수준에서 다시 확인했습니다.</p></div><div class="dev-arrow">←</div>
+      <div class="dev"><div class="dev-v">v2.5</div><strong>Morning Briefing</strong><p>매일 아침 관심종목 상태와 이전 결과 대비 주요 변화를 자동으로 정리하는 기능을 도입했습니다.</p></div><div class="dev-arrow">←</div>
+      <div class="dev"><div class="dev-v">v2.4</div><strong>Raw Feature 검증</strong><p>RSI·MACD·거래량·Breakout·이동평균 구조를 기초 지표 수준에서 다시 확인했습니다.</p></div><div class="dev-arrow">←</div>
       <div class="dev"><div class="dev-v">v2.3</div><strong>Technical Edge 재연구</strong><p>Trend·Momentum·Relative Strength 등 구성요소와 개선 후보를 비교했습니다.</p></div><div class="dev-arrow">←</div>
-      <div class="dev"><div class="dev-v">v2.2</div><strong>AI 호출 효율화</strong><p>분석 상태가 달라진 종목을 중심으로 AI 설명을 갱신해 불필요한 재호출을 줄이고 응답 효율을 높였습니다.</p></div><div class="dev-arrow">←</div>
-      <div class="dev"><div class="dev-v">v2.1</div><strong>Backtest &amp; Robustness</strong><p>Point-in-time 백테스트와 5·20·60 거래일 성과, bootstrap·non-overlap 검증 인프라를 추가했습니다.</p></div><div class="dev-arrow">←</div>
-      <div class="dev"><div class="dev-v">v2.0</div><strong>분석엔진 안정화</strong><p>KR/US 시장시간, partial candle, Wilder ATR, benchmark, Edge·Risk·Confidence 분리 등을 정비했습니다.</p></div><div class="dev-arrow">←</div>
+      <div class="dev"><div class="dev-v">v2.2</div><strong>응답 효율 개선</strong><p>분석 상태가 달라진 종목을 중심으로 설명을 갱신해 반복 분석의 불필요한 처리를 줄였습니다.</p></div><div class="dev-arrow">←</div>
+      <div class="dev"><div class="dev-v">v2.1</div><strong>검증 체계 보강</strong><p>5·20·60 거래일 성과와 다양한 표본 조건을 비교할 수 있는 검증 체계를 보강했습니다.</p></div><div class="dev-arrow">←</div>
+      <div class="dev"><div class="dev-v">v2.0</div><strong>분석엔진 안정화</strong><p>국내·미국 시장시간, 장중 데이터 처리, 기준지수와 Edge·Risk·Confidence 구조를 정비했습니다.</p></div><div class="dev-arrow">←</div>
       <div class="dev"><div class="dev-v">v1.0</div><strong>초기 AI 브리핑</strong><p>국내 시장과 관심종목의 가격·기술지표·뉴스를 텔레그램으로 정리하는 기본 구조를 만들었습니다.</p></div>
     </div></div>
 
     <details class="release-panel"><summary>버전별 업데이트 상세 보기</summary><div class="release-content">
-      <div class="release"><div class="release-top"><span class="release-v devnow">NEXT · 연구 예정</span><span class="release-title">KOSPI Technical Edge 개선 연구</span></div><p>현재 데이터를 다시 단순 최적화하는 방식이 아니라, KOSPI에서 어떤 feature와 비교 방식이 실제로 유효한지 구조부터 재점검하는 방향입니다.</p><ul><li>MA slope·MACD histogram·RS·breakout·Bollinger 위치 등 raw feature 재진단</li><li>절대 Edge 점수와 KOSPI 내 cross-sectional ranking 방식 비교</li><li>KOSPI regime·benchmark·시장 환경에 따라 신호의 의미가 달라지는지 검토</li><li>개발 데이터에서 후보를 만든 뒤 새로운 universe 또는 Live OOS에서 별도 검증</li><li>검증을 통과하기 전에는 현재 Production Edge를 임의로 변경하지 않음</li></ul></div>
-      <div class="release"><div class="release-top"><span class="release-v">v2.7.1 · 현재</span><span class="release-title">OOS Integrity &amp; KR 60-Day Relative Strength</span></div><p>운영 안정성과 검증 추적성을 한 단계 더 보강했습니다. 테스트 과정에서 잠시 중지했던 서비스는 데이터 경로 확인과 회귀 검증을 마친 뒤 정상 운영으로 전환했습니다.</p><ul><li>국내 종목의 KOSPI·KOSDAQ 대비 60일 Relative Strength 계산 경로 보강</li><li>종목과 benchmark를 동일 거래일 기준으로 정렬하고 충분한 이력 확보</li><li>scoring version·source hash 기반으로 Live OOS lineage를 구분해 추적성 강화</li><li>기존 OOS 기록은 그대로 보존하고 신규 관측부터 새 lineage 적용</li><li>회귀 테스트와 실제 /analyze 경로를 함께 확인한 뒤 서비스 정상화</li></ul></div>
-      <div class="release"><div class="release-top"><span class="release-v">v2.7</span><span class="release-title">Live Out-of-Sample Validation</span></div><p>과거 데이터에 다시 맞추는 대신, 실제 운영 시점의 신호를 그대로 고정하고 미래 데이터가 쌓인 뒤 평가하는 검증 체계를 운영에 추가했습니다.</p><ul><li>실제 분석 시점의 가격·Edge·Risk·Confidence·RS·Trend·Momentum을 immutable observation으로 저장</li><li>과거 기록을 대규모 backfill하지 않고 v2.7 도입 이후 실제 관측만 공식 Live OOS로 구분</li><li>5·20·60 거래일 뒤 raw return과 benchmark 대비 excess return 평가</li><li>MFE·MAE·최대낙폭·실현변동성 및 Alert 유형별 성과를 별도 outcome으로 기록</li><li>N&lt;30은 INSUFFICIENT_SAMPLE, 아직 미래 기간이 지나지 않은 결과는 PENDING으로 표시</li><li>Live 결과가 쌓여도 threshold나 weight를 자동 변경하지 않도록 분리</li></ul></div>
-      <div class="release"><div class="release-top"><span class="release-v">v2.6</span><span class="release-title">Automatic Change Detection</span></div><p>사용자가 직접 반복 분석하지 않아도 의미 있는 변화가 생겼을 때만 알림을 받을 수 있도록 자동화했습니다.</p><ul><li>정규장 중 15분 단위 감시, 열린 시장의 관심종목만 분석</li><li>Edge 65/80 돌파·이탈, Risk 등급, RS·Trend·Momentum 변화 감지</li><li>Hysteresis와 cooldown으로 경계값 반복 알림 억제</li><li>동일 종목은 한 번 분석한 정량 상태를 기준으로 사용자별 알림 여부를 판정</li><li>사용자 opt-in 방식의 /alerts_on·/alerts_off 지원</li></ul></div>
-      <div class="release"><div class="release-top"><span class="release-v review">v2.5 · 점검 중</span><span class="release-title">Morning Briefing</span></div><p>모닝 브리핑은 구현 완료 상태이며, 일반 분석과 동일한 데이터 기준·판단 체계를 사용하도록 최종 일관성 점검을 진행하고 있습니다. 보다 안정적인 자동 브리핑을 위한 품질 보강 단계입니다.</p><ul><li>매일 08:00 KST 관심종목 자동 브리핑</li><li>이전 결과 대비 Edge·Risk·판단·RS·Trend·Momentum 변화 비교</li><li>KR/US 혼합 관심종목과 각 시장의 실제 데이터 기준일 표시</li><li>동일 종목 중복 분석 제거, Python-only 메시지 생성으로 AI 호출 없이 동작</li><li>관리자 대시보드에서 독립 ON/OFF 지원</li></ul></div>
-      <div class="release"><div class="release-top"><span class="release-v">v2.4</span><span class="release-title">Raw Feature 검증</span></div><p>완성된 점수만 보는 대신 RSI·MACD·거래량·Breakout·이동평균 구조 등 기초 feature 수준에서 신호의 방향성을 다시 확인했습니다. 검증만으로 충분하지 않은 항목은 Production 점수에 억지로 반영하지 않았습니다.</p></div>
-      <div class="release"><div class="release-top"><span class="release-v">v2.3</span><span class="release-title">Technical Edge 구성요소 재연구</span></div><ul><li>100종목·108,234개 개발 관측치로 Trend·Momentum·Relative Strength·Participation·Setup을 재점검</li><li>Candidate A/B/C를 비교했지만 일부 평균 개선만으로는 채택하지 않음</li><li>중앙값·symbol equal-weight·tail dependency까지 함께 확인</li><li>시장별로 기술지표 유효성에 차이가 있다는 점을 확인하고 시장별 개선 연구 필요성을 남김</li></ul></div>
-      <div class="release"><div class="release-top"><span class="release-v">v2.2</span><span class="release-title">Claude 호출 및 비용 최적화</span></div><ul><li>정량 상태의 의미 있는 변화 여부를 기준으로 AI 설명 갱신 범위를 최소화</li><li>Edge·Risk·주요 기술신호·뉴스 등 핵심 상태가 바뀐 종목을 중심으로 설명을 갱신</li><li>정량값은 항상 최신 Python 결과를 기준으로 유지</li><li>동시 요청에서도 불필요한 중복 AI 호출이 늘어나지 않도록 처리 흐름 보강</li></ul></div>
-      <div class="release"><div class="release-top"><span class="release-v">v2.1</span><span class="release-title">Backtest, Robustness &amp; External Validation</span></div><ul><li>신호 시점 이후의 데이터를 입력에 사용하지 않는 Point-in-time 구조</li><li>5·20·60 거래일 forward/excess return, MFE·MAE·낙폭·변동성 계산</li><li>Non-overlap, signal-date cluster bootstrap, moving-block bootstrap</li><li>Symbol equal-weight, leave-one-symbol-out, 시장·연도별 검증</li><li>기존 50종목과 겹치지 않는 별도 50종목 외부검증 수행</li></ul></div>
-      <div class="release"><div class="release-top"><span class="release-v">v2.0</span><span class="release-title">분석엔진 구조 안정화</span></div><ul><li>Toss 토큰 공유·동시 인증 경쟁 방지 및 SQLite WAL/busy timeout</li><li>KR/US 정규장·휴장일·진행 중 일봉 처리</li><li>Partial candle의 거래량 기반 점수 제외, Wilder ATR 적용</li><li>Technical Edge·Risk·Confidence를 서로 독립된 점수로 분리</li><li>KOSPI·KOSDAQ·SOX·NASDAQ·S&amp;P 500 benchmark와 /us 시장 브리핑 추가</li><li>Claude Structured Output과 점수 override 방지</li></ul></div>
-      <div class="release"><div class="release-top"><span class="release-v">v1.0</span><span class="release-title">초기 AI STOCK BRIEF</span></div><p>국내 시장과 관심종목의 가격·기술지표·뉴스를 수집하고 Python 정량 분석과 AI 해석을 결합해 텔레그램으로 전달하는 기본 구조에서 시작했습니다.</p></div>
+      <div class="release"><div class="release-top"><span class="release-v devnow">NEXT · 연구 예정</span><span class="release-title">KOSPI Technical Edge 개선 연구</span></div><p>현재 점수를 단순히 다시 맞추기보다, KOSPI에서 어떤 기술지표와 비교 방식이 실제로 더 유효한지 별도로 검토할 계획입니다.</p><ul><li>이동평균 기울기·MACD·상대강도·돌파·가격 위치 등 기초 요소 재점검</li><li>절대 점수와 시장 내 상대적인 강도 비교 방식 검토</li><li>시장 환경에 따라 신호의 의미가 달라지는지 확인</li><li>새 개선안은 별도 데이터와 Live OOS 결과로 다시 검증한 뒤 적용 여부 판단</li></ul></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v2.7.2 · 현재</span><span class="release-title">Analysis Consistency, News &amp; Validation Stability</span></div><p>사용자가 같은 정보를 더 일관되고 편하게 확인할 수 있도록 분석 경로와 뉴스 기능, 검증 안정성을 함께 보강했습니다.</p><ul><li>일반 종목분석과 모닝 브리핑이 동일한 정량 분석 결과를 사용하도록 통일</li><li>가격·등락률·Technical Edge·Risk·Confidence·추세·모멘텀·상대강도의 기준 일관성 강화</li><li>중요 뉴스에 수집된 요약 정보를 함께 활용하고, <strong>기사 보기</strong>로 관련 기사 바로 확인</li><li>같은 분석 상태의 반복 요청은 기존 설명을 안전하게 재사용해 응답 효율 개선</li><li>휴장일과 실제 거래일 흐름을 구분해 Live OOS 검증의 안정성을 보강</li><li>Technical Edge·Risk·Confidence 계산 기준과 기술신호 구간은 변경하지 않음</li></ul></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v2.7.1</span><span class="release-title">OOS Integrity &amp; KR 60-Day Relative Strength</span></div><p>국내 종목의 장기 상대강도와 Live OOS 추적의 안정성을 보강했습니다.</p><ul><li>국내 종목의 KOSPI·KOSDAQ 대비 60일 Relative Strength 계산 보강</li><li>종목과 기준지수를 동일 거래일 기준으로 맞춰 비교</li><li>기존 검증 기록은 보존하면서 이후 결과도 이어서 추적할 수 있도록 안정화</li><li>회귀 테스트와 실제 종목분석 경로를 함께 확인한 뒤 서비스 정상화</li></ul></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v2.7</span><span class="release-title">Live Out-of-Sample Validation</span></div><p>과거 데이터에 다시 맞추는 대신, 실제 운영 시점의 분석 결과를 저장해 미래 데이터가 쌓인 뒤 확인하는 검증 체계를 추가했습니다.</p><ul><li>실제 분석 시점의 주요 정량 결과를 고정해 저장</li><li>5·20·60 거래일 뒤 종목 수익률과 기준지수 대비 성과 확인</li><li>미래 기간이 아직 지나지 않은 결과는 확정하지 않음</li><li>표본이 충분하지 않을 때는 성급하게 결론 내리지 않도록 구분</li><li>검증 결과가 쌓여도 기술점수 기준을 자동으로 바꾸지 않음</li></ul></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v2.6</span><span class="release-title">Automatic Change Detection</span></div><p>사용자가 직접 반복 분석하지 않아도 의미 있는 변화가 생겼을 때만 알림을 받을 수 있도록 자동화했습니다.</p><ul><li>정규장 중 관심종목의 주요 기술 상태를 주기적으로 확인</li><li>기술점수 주요 구간 변화, Risk 등급, 상대강도·추세·모멘텀 변화 감지</li><li>같은 경계에서 알림이 반복되지 않도록 안정화</li><li>사용자가 직접 알림을 켠 경우에만 발송</li></ul></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v2.5</span><span class="release-title">Morning Briefing</span></div><p>매일 아침 관심종목의 현재 상태와 이전 결과 대비 중요한 변화를 한 번에 확인할 수 있는 자동 브리핑을 추가했습니다.</p><ul><li>매일 아침 관심종목 자동 브리핑</li><li>이전 결과 대비 Edge·Risk·판단·RS·Trend·Momentum 변화 비교</li><li>국내·미국 관심종목의 실제 데이터 기준일을 구분해 표시</li><li>v2.7.2에서 일반 종목분석과 동일한 정량 기준을 사용하도록 일관성 보강 완료</li></ul></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v2.4</span><span class="release-title">Raw Feature 검증</span></div><p>완성된 점수만 보는 대신 RSI·MACD·거래량·돌파·이동평균 구조 등 기초 지표 수준에서 신호 방향을 다시 확인했습니다. 검증 근거가 충분하지 않은 요소는 점수에 억지로 반영하지 않았습니다.</p></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v2.3</span><span class="release-title">Technical Edge 구성요소 재연구</span></div><ul><li>Trend·Momentum·Relative Strength·Participation·Setup 구성요소를 다시 점검</li><li>여러 개선 후보를 비교하되 일부 평균 개선만으로 바로 교체하지 않음</li><li>특정 종목이나 일부 구간에 결과가 과도하게 의존하지 않는지 함께 확인</li><li>시장별 특성 차이를 확인하고 다음 개선 연구 대상으로 분리</li></ul></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v2.2</span><span class="release-title">AI 설명 및 응답 효율 개선</span></div><ul><li>정량 상태가 실제로 달라진 종목을 중심으로 설명 갱신</li><li>같은 상태를 반복 분석할 때 불필요한 재처리를 줄임</li><li>정량값은 항상 최신 계산 결과를 기준으로 유지</li></ul></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v2.1</span><span class="release-title">Backtest, Robustness &amp; External Validation</span></div><ul><li>분석 시점 이후의 데이터를 미리 사용하지 않는 방식으로 검증</li><li>5·20·60 거래일 이후 성과를 여러 조건에서 비교</li><li>특정 종목에 결과가 치우치지 않는지 확인</li><li>기존 개발 종목과 겹치지 않는 별도 종목군으로 추가 검증</li></ul></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v2.0</span><span class="release-title">분석엔진 구조 안정화</span></div><ul><li>국내·미국 정규장·휴장일·진행 중 일봉 처리 정비</li><li>장중 미완성 거래량이 기술점수를 왜곡하지 않도록 처리</li><li>Technical Edge·Risk·Confidence를 서로 다른 의미의 점수로 분리</li><li>KOSPI·KOSDAQ·SOX·NASDAQ·S&amp;P 500 기준지수와 미국 시장 브리핑 지원</li></ul></div>
+
+      <div class="release"><div class="release-top"><span class="release-v">v1.0</span><span class="release-title">초기 AI STOCK BRIEF</span></div><p>국내 시장과 관심종목의 가격·기술지표·뉴스를 수집하고 정량 분석과 AI 설명을 결합해 텔레그램으로 전달하는 기본 구조에서 시작했습니다.</p></div>
     </div></details>
   </section>
 
   <section class="summary">
     <h2>현재 개발 방향</h2>
-    <p><strong>v2.7.1</strong>에서 국내 종목 60일 상대강도와 Live OOS 버전 추적을 보강했으며, 내부 점검 후 서비스는 정상 운영 중입니다.</p>
-    <p><strong>Morning Briefing</strong>은 일반 분석과의 기준을 더 정교하게 맞추기 위한 일관성 점검을 이어가고 있습니다.</p>
-    <p>5·20·60 거래일 미래 성과가 실제로 쌓이기 전에는 결과를 확정하지 않으며, 자동 Calibration도 수행하지 않습니다.</p>
-    <p>다음 연구는 시장별 유효성 차이가 확인된 <strong>KOSPI Technical Edge</strong>를 raw feature·상대순위·market regime 관점에서 재검토하는 방향입니다.</p>
+    <p><strong>v2.7.2</strong>에서 일반 종목분석과 모닝 브리핑의 정량 기준을 통일하고, 뉴스 요약·기사 바로보기와 반복 분석 응답 효율, Live OOS 검증 안정성을 보강했습니다.</p>
+    <p>이번 업데이트에서도 <strong>Technical Edge·Risk·Confidence의 계산 기준과 기술신호 구간은 변경하지 않았습니다.</strong></p>
+    <p>5·20·60 거래일 미래 성과가 실제로 쌓이기 전에는 결과를 확정하지 않으며, 검증 결과만으로 점수 기준을 자동 변경하지 않습니다.</p>
+    <p>다음 연구는 시장별 유효성 차이가 확인된 <strong>KOSPI Technical Edge</strong>를 별도로 재검토하는 방향입니다.</p>
   </section>
 
   <section class="card" id="validation">
     <h2>검증 및 Technical Edge 개선 연구</h2>
     <p class="lead">현재 Production 점수가 맞다/틀리다를 한 번의 결과로 판정하기보다, 기존 방식보다 일관되게 나은 개선안을 찾기 위해 개발 데이터와 별도 외부검증 데이터를 나눠 확인하고 있습니다.</p>
     <div class="metrics"><div class="metric"><strong>100종목</strong><span>Development Universe</span></div><div class="metric"><strong>108,234</strong><span>Development Observations</span></div><div class="metric"><strong>50종목</strong><span>External Validation Universe</span></div><div class="metric"><strong>54,030</strong><span>External Validation Observations</span></div></div>
-    <div class="pipeline"><div class="pipe"><strong>Point-in-time</strong><span>신호 시점까지의 데이터만 사용</span></div><div class="arrow">→</div><div class="pipe"><strong>Non-overlap</strong><span>겹치는 기간 영향 확인</span></div><div class="arrow">→</div><div class="pipe"><strong>Bootstrap</strong><span>표본 불확실성 확인</span></div><div class="arrow">→</div><div class="pipe"><strong>Equal-weight</strong><span>특정 종목 의존 확인</span></div><div class="arrow">→</div><div class="pipe"><strong>External 50</strong><span>기존 universe와 overlap 0</span></div><div class="arrow">→</div><div class="pipe"><strong>Calibration</strong><span>개선 근거가 부족하면 현행 유지</span></div></div>
-    <div class="notice good"><strong>현재 Production 모델이 실패했다는 의미가 아닙니다.</strong><br>아래 Candidate A/B/C는 현재 모델을 대체하기 위해 시험한 <strong>개선 후보</strong>입니다. 일부 평균 수치가 좋아진 후보도 있었지만 중앙값·종목 동일가중·tail dependency 등 전체 채택 기준을 만족하지 못해 기존 Production 점수를 유지했습니다.</div>
-    <div class="notice violet"><strong>KOSPI Technical Edge는 다음 개선 연구 대상으로 두고 있습니다.</strong><br>시장 특성에 따라 Technical Edge 구성요소의 유효성 차이가 확인되어, 단순히 기존 weight를 다시 맞추기보다 KOSPI에서 유효한 raw feature, 상대순위 기반 Edge, 시장 regime 조건을 별도로 재검토합니다. 새 후보가 만들어져도 이미 확인한 데이터에서 바로 채택하지 않고 새로운 universe와 현재 수집 중인 Live OOS 결과로 다시 검증할 계획입니다.</div>
+    <div class="pipeline"><div class="pipe"><strong>Point-in-time</strong><span>신호 시점까지의 데이터만 사용</span></div><div class="arrow">→</div><div class="pipe"><strong>Non-overlap</strong><span>겹치는 기간 영향 확인</span></div><div class="arrow">→</div><div class="pipe"><strong>Bootstrap</strong><span>표본 불확실성 확인</span></div><div class="arrow">→</div><div class="pipe"><strong>Equal-weight</strong><span>특정 종목 의존 확인</span></div><div class="arrow">→</div><div class="pipe"><strong>External 50</strong><span>별도 종목군 확인</span></div><div class="arrow">→</div><div class="pipe"><strong>Calibration</strong><span>개선 근거가 부족하면 현행 유지</span></div></div>
+    <div class="notice good"><strong>현재 Production 모델이 실패했다는 의미가 아닙니다.</strong><br>아래 Candidate A/B/C는 현재 모델보다 더 나은 개선안을 찾기 위해 시험한 후보입니다. 일부 수치가 좋아진 후보도 있었지만 전체 채택 기준을 만족하지 못해 기존 Production 점수를 유지했습니다.</div>
+    <div class="notice violet"><strong>KOSPI Technical Edge는 다음 개선 연구 대상으로 두고 있습니다.</strong><br>시장 특성에 따라 Technical Edge 구성요소의 유효성 차이가 확인되어, 단순히 기존 점수 비중을 다시 맞추기보다 KOSPI에서 더 유효한 기초 지표와 비교 방식을 별도로 재검토합니다. 새 후보가 만들어져도 별도 데이터와 Live OOS 결과로 다시 확인한 뒤 적용 여부를 판단합니다.</div>
     <details class="more"><summary>검증 결과와 도표 자세히 보기</summary><div>
       <h3>Technical Edge 개선 후보 검증</h3>
-      <div class="table-wrap"><table><thead><tr><th>후보</th><th>개선 조건</th><th>결정</th><th>해석</th></tr></thead><tbody><tr><td>현재 Production</td><td>기준선</td><td><span class="tag tag-keep">현행 유지</span></td><td>새 후보가 전체 채택 기준을 넘기 전까지 비교 기준으로 유지</td></tr><tr><td>Candidate A</td><td>2 / 6</td><td><span class="tag tag-hold">미채택</span></td><td>일부 장기 평균 개선은 있었지만 20일·equal-weight 안정성 개선 부족</td></tr><tr><td>Candidate B</td><td>2 / 6</td><td><span class="tag tag-hold">미채택</span></td><td>추가 gate를 적용해도 핵심 약점과 tail dependency가 충분히 개선되지 않음</td></tr><tr><td>Candidate C</td><td>3 / 6</td><td><span class="tag tag-hold">미채택</span></td><td>평균·non-overlap 일부 개선에도 중앙값과 종목 동일가중 기준에서 우위가 불충분</td></tr></tbody></table></div>
+      <div class="table-wrap"><table><thead><tr><th>후보</th><th>개선 조건</th><th>결정</th><th>해석</th></tr></thead><tbody><tr><td>현재 Production</td><td>기준선</td><td><span class="tag tag-keep">현행 유지</span></td><td>새 후보가 전체 채택 기준을 넘기 전까지 비교 기준으로 유지</td></tr><tr><td>Candidate A</td><td>2 / 6</td><td><span class="tag tag-hold">미채택</span></td><td>일부 장기 평균 개선은 있었지만 전체 안정성 개선 부족</td></tr><tr><td>Candidate B</td><td>2 / 6</td><td><span class="tag tag-hold">미채택</span></td><td>추가 조건을 적용해도 핵심 약점이 충분히 개선되지 않음</td></tr><tr><td>Candidate C</td><td>3 / 6</td><td><span class="tag tag-hold">미채택</span></td><td>일부 평균 개선에도 중앙값과 종목별 안정성에서 우위가 불충분</td></tr></tbody></table></div>
       <h3>외부검증 해석</h3>
       <div class="notice"><strong>외부검증의 “추가 검증 필요”는 모델이 무효라는 뜻이 아닙니다.</strong><br>모든 시장과 종목군에서 동일한 강도의 Technical Edge가 재현됐다고 말하기에는 근거가 충분하지 않았다는 의미입니다. 반대로 KOSDAQ 효과와 Technical Risk처럼 재현된 항목은 별도로 확인했습니다.</div>
-      <div class="table-wrap"><table><thead><tr><th>항목</th><th>현재 해석</th><th>의미</th></tr></thead><tbody><tr><td>전체 Technical Edge</td><td><span class="tag tag-hold">추가 검증 필요</span></td><td>시장별 차이가 있어 하나의 보편적 Edge로 단정하지 않음</td></tr><tr><td>KOSDAQ Expanded</td><td><span class="tag tag-pass">재현 확인</span></td><td>신규 KOSDAQ universe에서도 주요 평균 방향이 재현됨</td></tr><tr><td>Technical Risk</td><td><span class="tag tag-pass">검증 통과</span></td><td>Risk가 높아질수록 downside·낙폭·변동성이 함께 증가</td></tr><tr><td>Confidence</td><td><span class="tag tag-info">변동성 부족</span></td><td>당시 historical EOD에서 값의 variation이 부족해 예측력을 주장하지 않음</td></tr></tbody></table></div>
+      <div class="table-wrap"><table><thead><tr><th>항목</th><th>현재 해석</th><th>의미</th></tr></thead><tbody><tr><td>전체 Technical Edge</td><td><span class="tag tag-hold">추가 검증 필요</span></td><td>시장별 차이가 있어 하나의 보편적 Edge로 단정하지 않음</td></tr><tr><td>KOSDAQ Expanded</td><td><span class="tag tag-pass">재현 확인</span></td><td>신규 KOSDAQ 종목군에서도 주요 평균 방향이 재현됨</td></tr><tr><td>Technical Risk</td><td><span class="tag tag-pass">검증 통과</span></td><td>Risk가 높아질수록 하방 변동과 낙폭·변동성이 함께 증가</td></tr><tr><td>Confidence</td><td><span class="tag tag-info">변동성 부족</span></td><td>당시 historical EOD에서 값의 variation이 부족해 예측력을 주장하지 않음</td></tr></tbody></table></div>
       <div class="chart"><div class="chart-title">Development Observation 구성</div><div class="bar"><label>KOSPI</label><div class="track"><div class="fill" style="width:100%"></div></div><b>32,070</b></div><div class="bar"><label>US Tech</label><div class="track"><div class="fill" style="width:89%"></div></div><b>28,548</b></div><div class="bar"><label>KOSDAQ</label><div class="track"><div class="fill" style="width:80%"></div></div><b>25,656</b></div><div class="bar"><label>US Non-Tech</label><div class="track"><div class="fill" style="width:68%"></div></div><b>21,960</b></div></div>
-      <div class="notice warn"><strong>이미 확인한 외부검증 데이터는 다시 unseen으로 취급하지 않습니다.</strong><br>한 번 결과를 확인한 universe는 이후 Development Dataset으로 재분류해, 같은 시험지를 반복해서 최종검증에 사용하는 문제를 피합니다.</div>
+      <div class="notice warn"><strong>이미 확인한 외부검증 데이터는 다시 unseen으로 취급하지 않습니다.</strong><br>한 번 결과를 확인한 종목군은 같은 시험지를 반복해서 최종검증에 사용하는 문제를 피하기 위해 이후 개발 데이터로 취급합니다.</div>
       <a class="btn btn-soft" href="https://fixie-aibot.github.io/ai-stock-brief/validation_summary.csv" target="_blank">검증 요약 CSV 보기</a>
     </div></details>
   </section>
@@ -136,7 +149,7 @@
       <div class="command-item"><code>/alerts_off</code><strong>자동 변화 알림 끄기</strong><p><code>/알림끄기</code>도 사용할 수 있습니다. 일반 분석과 모닝 브리핑 기능에는 영향을 주지 않습니다.</p></div>
       <div class="command-item"><code>/alerts_status</code><strong>자동 알림 상태 확인</strong><p><code>/알림상태</code>도 사용할 수 있습니다. 현재 자동 변화 알림이 켜져 있는지 확인합니다.</p></div>
     </div>
-    <div class="alert-emphasis"><strong>🚨 중요 · 장중 변화 알림은 기본적으로 활성화되어 있지 않습니다.</strong><br>사용자가 직접 <code>/alerts_on</code> 또는 <code>/알림켜기</code>를 입력해 <strong>알림을 켠 경우에만</strong> 장중 변화 알림을 받을 수 있습니다. 직접 켜지 않은 경우 장중 변화 알림은 발송되지 않습니다.</div>
+    <div class="alert-emphasis"><strong>중요 · 장중 변화 알림은 기본적으로 활성화되어 있지 않습니다.</strong><br>사용자가 직접 <code>/alerts_on</code> 또는 <code>/알림켜기</code>를 입력해 <strong>알림을 켠 경우에만</strong> 장중 변화 알림을 받을 수 있습니다.</div>
     <div class="command-note"><strong>처음 사용할 때는</strong> 봇 실행 → 관심종목 등록 → <code>/analyze</code> 순서만 기억하면 됩니다. 자동 장중 알림이 필요할 때만 <code>/alerts_on</code> 또는 <code>/알림켜기</code>를 추가로 켜면 됩니다.</div>
   </section>
 
@@ -155,19 +168,19 @@
       <p>기술점수와 신뢰도를 바탕으로 현재 기술적 상태를 읽기 쉽게 분류한 라벨입니다. 실제 운영 기준은 다음과 같습니다.</p>
       <ul class="range-list"><li><strong>강한 매수우위</strong> · 기술점수 80~100 — 기술적으로 가장 우호적인 구간</li><li><strong>매수우위</strong> · 기술점수 65~79 — 기술적으로 우호적인 편</li><li><strong>중립</strong> · 기술점수 45~64 — 방향성이 뚜렷하지 않은 구간</li><li><strong>매도우위</strong> · 기술점수 30~44 — 기술적으로 약한 편</li><li><strong>강한 매도우위</strong> · 기술점수 0~29 — 기술적으로 가장 약한 구간</li></ul>
       <p>단, <strong>신뢰도가 60점 미만이면 점수와 관계없이 “판단 보류”</strong>로 표시합니다. 데이터 신뢰가 부족한 상태에서는 기술적 방향을 확정하지 않기 위한 장치입니다.</p>
-      <div class="notice warn"><strong>“강한 매수우위/매수우위/중립/매도우위/강한 매도우위”는 매수·매도 주문 추천이 아닙니다.</strong><br>여러 기술지표를 종합한 현재 상태의 분류명이며, 실제 거래 여부는 사용자가 다른 정보와 함께 별도로 판단해야 합니다.</div>
+      <div class="notice warn"><strong>기술신호는 매수·매도 주문 추천이 아닙니다.</strong><br>여러 기술지표를 종합한 현재 상태의 분류명이며, 실제 거래 여부는 사용자가 다른 정보와 함께 별도로 판단해야 합니다.</div>
     </div></details>
 
     <details class="more" id="manual-risk"><summary>③ 위험도</summary><div>
-      <p><strong>Technical Risk</strong>는 가격이 흔들릴 위험을 Technical Edge와 별도로 0~100점으로 평가합니다. 변동성(ATR 기반) 40%, 과열도 35%, 하락·낙폭 구조 25%를 사용 가능한 데이터에 맞춰 종합합니다.</p>
+      <p><strong>Technical Risk</strong>는 가격이 흔들릴 위험을 Technical Edge와 별도로 0~100점으로 평가합니다. 변동성, 과열도, 하락·낙폭 구조를 사용 가능한 데이터에 맞춰 종합합니다.</p>
       <ul class="range-list"><li>🟢 <strong>0~34점 · 낮음</strong> — 상대적으로 변동·과열·하방 위험이 낮은 구간</li><li>🟡 <strong>35~64점 · 보통</strong> — 일반적인 수준의 위험 요인이 존재하는 구간</li><li>🔴 <strong>65~100점 · 높음</strong> — 변동성, 과열 또는 하방 위험 중 하나 이상이 크게 나타날 수 있는 구간</li></ul>
       <p><strong>위험도가 높다고 반드시 주가가 하락한다는 뜻은 아닙니다.</strong> 강한 상승 종목도 변동성과 과열이 커지면 위험도가 높게 나올 수 있습니다.</p>
     </div></details>
 
     <details class="more" id="manual-confidence"><summary>④ 신뢰도</summary><div>
-      <p><strong>Confidence</strong>는 “주가가 오를 확률”이 아니라 <strong>현재 분석을 얼마나 안정적으로 참고할 수 있는지</strong>를 나타냅니다. 데이터 충족도 50%, 이력 길이 20%, 시세 최신성 20%, benchmark 품질 10%를 종합합니다.</p>
-      <ul class="range-list"><li>🔴 <strong>0~59점 · 낮음</strong> — 데이터·이력·최신성·benchmark 중 부족한 요소가 큰 상태</li><li>🟡 <strong>60~79점 · 보통</strong> — 분석은 가능하지만 일부 품질 제약이 남은 상태</li><li>🟢 <strong>80~100점 · 높음</strong> — 현재 분석 입력이 비교적 충분하고 안정적인 상태</li></ul>
-      <p>기술점수 계산에 사용할 수 있는 구성요소가 크게 부족하면 신뢰도는 보수적으로 제한됩니다. <strong>신뢰도 100은 적중률 100%가 아니며 수익을 보장하지 않습니다.</strong></p>
+      <p><strong>Confidence</strong>는 “주가가 오를 확률”이 아니라 <strong>현재 분석을 얼마나 안정적으로 참고할 수 있는지</strong>를 나타냅니다. 데이터 충족도, 이력 길이, 시세 최신성, 기준지수 품질을 종합합니다.</p>
+      <ul class="range-list"><li>🔴 <strong>0~59점 · 낮음</strong> — 데이터·이력·최신성·기준지수 중 부족한 요소가 큰 상태</li><li>🟡 <strong>60~79점 · 보통</strong> — 분석은 가능하지만 일부 품질 제약이 남은 상태</li><li>🟢 <strong>80~100점 · 높음</strong> — 현재 분석 입력이 비교적 충분하고 안정적인 상태</li></ul>
+      <p><strong>신뢰도 100은 적중률 100%가 아니며 수익을 보장하지 않습니다.</strong></p>
     </div></details>
 
     <details class="more" id="manual-price"><summary>⑤ 가격</summary><div>
@@ -178,23 +191,22 @@
     <details class="more" id="manual-trend"><summary>⑥ 추세</summary><div>
       <p>현재 가격과 MA5·MA10·MA20 이동평균선의 위치를 이용해 <strong>주가 흐름의 방향과 배열 구조</strong>를 함께 보여줍니다.</p>
       <ul class="range-list"><li><strong>강한 상승</strong> — 현재가 &gt; MA5 &gt; MA10 &gt; MA20으로 상승 구조가 가장 뚜렷한 상태</li><li><strong>상승</strong> — 현재가가 MA20 위에 있고 MA5도 MA20 위에 있지만 완전한 강한 상승 구조까지는 아닌 상태</li><li><strong>혼조</strong> — 상승·하락 조건이 명확하게 한쪽으로 정렬되지 않은 상태</li><li><strong>하락</strong> — 현재가가 MA20 아래에 있고 MA5도 MA20 아래에 있지만 완전한 강한 하락 구조까지는 아닌 상태</li><li><strong>강한 하락</strong> — 현재가 &lt; MA5 &lt; MA10 &lt; MA20으로 하락 구조가 가장 뚜렷한 상태</li></ul>
-      <p><strong>정배열</strong>은 MA5 &gt; MA10 &gt; MA20으로, 단기 이동평균선이 중기·장기 이동평균선 위에 차례로 놓인 구조입니다. 일반적으로 최근 가격 흐름이 상승 방향으로 정돈된 상태를 뜻합니다.</p>
-      <p><strong>역배열</strong>은 MA5 &lt; MA10 &lt; MA20으로, 단기 이동평균선이 중기·장기 이동평균선 아래에 차례로 놓인 구조입니다. 일반적으로 최근 가격 흐름이 약하거나 하락 방향으로 정돈된 상태를 뜻합니다.</p>
+      <p><strong>정배열</strong>은 MA5 &gt; MA10 &gt; MA20으로, 단기 이동평균선이 중기·장기 이동평균선 위에 차례로 놓인 구조입니다.</p>
+      <p><strong>역배열</strong>은 MA5 &lt; MA10 &lt; MA20으로, 단기 이동평균선이 중기·장기 이동평균선 아래에 차례로 놓인 구조입니다.</p>
       <p><strong>혼조 배열</strong>은 세 이동평균선의 순서가 서로 엇갈려 뚜렷한 정배열·역배열이 아닌 상태입니다. 이동평균 데이터가 부족하면 <strong>데이터 부족</strong>으로 표시합니다.</p>
     </div></details>
 
     <details class="more" id="manual-momentum"><summary>⑦ 모멘텀</summary><div>
       <p><strong>모멘텀</strong>은 최근 가격 움직임의 힘과 방향이 얼마나 살아 있는지 확인하는 항목이며, 실제 카드에서는 <strong>RSI + MACD</strong>로 보여줍니다.</p>
-      <p><strong>RSI(14)</strong>는 최근 14기간 상승·하락 강도를 0~100으로 나타냅니다. AI STOCK BRIEF 내부 상태 기준은 30 미만 과매도, 30~44 약세, 45~54 중립, 55~69 상승 모멘텀, 70 이상 과매수입니다. 다만 RSI 70 이상이 곧 매도, 30 미만이 곧 매수를 뜻하지는 않습니다.</p>
-      <p><strong>MACD</strong>는 MACD선과 Signal선, Histogram 변화를 함께 봅니다. 화면의 <strong>Signal 상단</strong>은 MACD선이 Signal선보다 위에 있다는 뜻이고, <strong>Signal 하단</strong>은 아래에 있다는 뜻입니다. Histogram 방향까지 같은 쪽으로 힘이 실리면 <strong>상승 우위</strong> 또는 <strong>하락 우위</strong>로 표시될 수 있습니다.</p>
-      <p class="small-note">※ “Signal 상단”은 MACD가 0선 위라는 뜻이 아니라 MACD선과 Signal선의 상대적 위치를 말합니다.</p>
+      <p><strong>RSI(14)</strong>는 최근 14기간 상승·하락 강도를 0~100으로 나타냅니다. 내부 상태 기준은 30 미만 과매도, 30~44 약세, 45~54 중립, 55~69 상승 모멘텀, 70 이상 과매수입니다. 다만 RSI 70 이상이 곧 매도, 30 미만이 곧 매수를 뜻하지는 않습니다.</p>
+      <p><strong>MACD</strong>는 MACD선과 Signal선, Histogram 변화를 함께 봅니다. 화면의 <strong>Signal 상단</strong>은 MACD선이 Signal선보다 위에 있다는 뜻이고, <strong>Signal 하단</strong>은 아래에 있다는 뜻입니다.</p>
     </div></details>
 
     <details class="more" id="manual-volume"><summary>⑧ 거래량</summary><div>
       <p>표시되는 <strong>거래량 x.xx배</strong>는 현재 일봉의 거래량을 <strong>직전 20거래일의 일평균 거래량</strong>과 비교한 값입니다.</p>
       <ul class="range-list"><li><strong>1.00배</strong> — 현재 거래량이 직전 20거래일 평균과 같은 수준</li><li><strong>0.60배</strong> — 직전 20거래일 평균의 약 60%</li><li><strong>1.50배</strong> — 평균의 약 150%</li><li><strong>2.00배</strong> — 평균의 약 200%</li></ul>
-      <p><strong>장중에는 특히 주의해서 봐야 합니다.</strong> 분자는 그 시점까지 쌓인 <strong>당일 누적 거래량</strong>이고, 분모는 직전 20거래일의 <strong>하루 전체 거래량 평균</strong>입니다. 따라서 오전이나 장중에는 1배보다 낮게 보이는 것이 자연스러울 수 있으며, 같은 시각끼리 보정한 거래량 비율은 아닙니다.</p>
-      <p>장중 일봉이 아직 완성되지 않은 경우 이 거래량 비율은 화면에는 보여주지만, <strong>Technical Edge의 거래량 확인 점수에는 직접 반영하지 않도록 제외</strong>해 미완성 일봉으로 점수가 왜곡되는 것을 줄입니다.</p>
+      <p><strong>장중에는 특히 주의해서 봐야 합니다.</strong> 분자는 그 시점까지 쌓인 당일 누적 거래량이고, 분모는 직전 20거래일의 하루 전체 거래량 평균입니다.</p>
+      <p>장중 일봉이 아직 완성되지 않은 경우 이 거래량 비율은 화면에는 보여주지만, <strong>Technical Edge의 거래량 확인 점수에는 직접 반영하지 않도록 제외</strong>합니다.</p>
     </div></details>
 
     <details class="more" id="manual-rs"><summary>⑨ 상대강도</summary><div>
@@ -205,39 +217,38 @@
     </div></details>
 
     <details class="more" id="manual-overheat"><summary>⑩ 과열</summary><div>
-      <p><strong>과열</strong>은 최근 가격이 얼마나 빠르게 올라왔거나 평균 가격에서 멀어졌는지를 0~100점으로 확인하는 보조지표입니다. 5일 수익률, MA20 이격, Bollinger 위치, 20일 고점 근접도, 20일 저점 대비 반등폭, RSI 등을 함께 봅니다.</p>
+      <p><strong>과열</strong>은 최근 가격이 얼마나 빠르게 올라왔거나 평균 가격에서 멀어졌는지를 0~100점으로 확인하는 보조지표입니다. 최근 수익률, 이동평균 이격, Bollinger 위치, 최근 고점·저점 위치, RSI 등을 함께 봅니다.</p>
       <ul class="range-list"><li>🟢 <strong>0~34점 · 낮음</strong></li><li>🟡 <strong>35~64점 · 보통</strong></li><li>🔴 <strong>65~100점 · 높음</strong></li></ul>
-      <p>과열도가 높다는 것은 <strong>단기 속도와 가격 이격이 커졌다는 주의 신호</strong>이지 자동 매도 신호가 아닙니다. 강한 추세에서는 높은 과열 상태가 일정 기간 이어질 수도 있습니다.</p>
+      <p>과열도가 높다는 것은 <strong>단기 속도와 가격 이격이 커졌다는 주의 신호</strong>이지 자동 매도 신호가 아닙니다.</p>
     </div></details>
 
     <details class="more" id="manual-data"><summary>⑪ 데이터 흐름</summary><div>
-      <p>실제 카드의 <strong>데이터 충분/제한적/부족</strong> 표시는 분석에 필요한 핵심 입력이 얼마나 갖춰졌는지를 보여줍니다. MA5·MA20·RSI·MACD·Bollinger 위치·20일 수익률·거래량 비율·현재가 등 핵심 항목의 충족도를 확인합니다.</p>
+      <p>실제 카드의 <strong>데이터 충분/제한적/부족</strong> 표시는 분석에 필요한 핵심 입력이 얼마나 갖춰졌는지를 보여줍니다.</p>
       <ul class="range-list"><li><strong>충분</strong> — 핵심 데이터 충족도 85% 이상</li><li><strong>제한적</strong> — 70~84%</li><li><strong>부족</strong> — 70% 미만</li></ul>
-      <p>이력 자체가 짧으면 데이터 충족도도 보수적으로 제한됩니다. 카드 뒤의 <strong>장중 누적 거래량</strong>은 오늘 일봉이 아직 완성되지 않았다는 뜻이고, <strong>종가 기준</strong>은 완성된 일봉 기준이라는 뜻입니다.</p>
-      <p>장중 누적 거래량 상태에서는 미완성 거래량을 Technical Edge의 거래량 확인 점수에서 제외합니다.</p>
+      <p>카드 뒤의 <strong>장중 누적 거래량</strong>은 오늘 일봉이 아직 완성되지 않았다는 뜻이고, <strong>종가 기준</strong>은 완성된 일봉 기준이라는 뜻입니다.</p>
     </div></details>
 
     <details class="more" id="manual-strategy"><summary>⑫ 전략 방향</summary><div>
-      <p><strong>전략 방향은 매수·매도 추천이나 투자 지시가 아닙니다.</strong> AI STOCK BRIEF의 Python 정량 분석 엔진이 Technical Edge, Risk, Confidence, 돌파 상태 등 현재 계산값을 바탕으로 <strong>어떤 관점에서 상태를 관찰할지 요약한 보조 판단 지표</strong>입니다.</p>
+      <p><strong>전략 방향은 매수·매도 추천이나 투자 지시가 아닙니다.</strong> Technical Edge, Risk, Confidence, 돌파 상태 등 현재 계산값을 바탕으로 <strong>어떤 관점에서 상태를 관찰할지 요약한 보조 판단 지표</strong>입니다.</p>
       <p>실제 표시 예시는 <strong>데이터 확인 우선</strong>, <strong>신규 진입 회피 · 위험관리 우선</strong>, <strong>약한 구조 · 추세 회복 확인</strong>, <strong>방향 확인 대기</strong>, <strong>추격보다 눌림·변동성 완화 확인</strong>, <strong>돌파 유지 확인 후 분할 접근 고려</strong>, <strong>눌림 또는 분할 접근 고려</strong> 등입니다.</p>
-      <p>이 문구들은 <strong>현재 정량 상태의 관찰 포인트를 분류한 라벨</strong>이며 실제 주문 실행을 요구하지 않습니다. 같은 라벨에서도 기업 실적, 뉴스, 시장 상황, 투자기간, 손실 감내 수준 등에 따라 사용자의 판단은 달라질 수 있습니다.</p>
-      <div class="notice warn"><strong>중요</strong><br>전략 방향을 포함한 AI STOCK BRIEF의 모든 분석 결과는 투자 판단을 돕기 위한 참고용 보조지표이며, 특정 종목의 매수·매도 또는 수익을 권유·보장하지 않습니다. 최종 투자 판단과 주문 결정은 사용자가 직접 내려야 합니다.</div>
+      <div class="notice warn"><strong>중요</strong><br>전략 방향을 포함한 모든 분석 결과는 투자 판단을 돕기 위한 참고용 보조지표이며, 특정 종목의 매수·매도 또는 수익을 권유·보장하지 않습니다.</div>
     </div></details>
 
     <details class="more" id="manual-levels"><summary>⑬ 지지 / 저항</summary><div>
       <p><strong>지지</strong>는 현재가 아래에서 기술적으로 참고할 만한 가까운 가격 후보, <strong>저항</strong>은 현재가 위에서 참고할 만한 가까운 가격 후보입니다.</p>
-      <p>후보에는 MA5·MA10·MA20, 최근 20일·60일 고점/저점, 이전 돌파 기준 가격, Bollinger 상·하단 등이 포함되며 그중 현재가와 가까운 지지·저항을 선택해 표시합니다.</p>
+      <p>후보에는 이동평균, 최근 고점/저점, 이전 돌파 기준 가격, Bollinger 상·하단 등이 포함되며 그중 현재가와 가까운 지지·저항을 선택해 표시합니다.</p>
       <p>정확히 그 가격에서 반드시 반등하거나 하락한다는 뜻이 아니므로 <strong>확정선이 아닌 참고 구간</strong>으로 보는 것이 적절합니다.</p>
     </div></details>
 
     <details class="more" id="manual-factors"><summary>⑭ 강점 / 주의</summary><div>
       <p><strong>✅ 강점</strong>은 현재 정량 상태와 시장 맥락에서 긍정적으로 볼 수 있는 핵심 근거를, <strong>⚠️ 주의</strong>는 반대로 확인해야 할 위험·약점 근거를 짧게 보여줍니다.</p>
-      <p>핵심 점수와 기술신호는 Python 계산값이 기준이며, 강점·주의 문장은 그 상태를 이해하기 쉽게 정리하는 <strong>보조 설명</strong>입니다. 한 문장만으로 매수·매도를 결정하기 위한 독립 신호는 아닙니다.</p>
+      <p>핵심 점수와 기술신호는 정량 계산값이 기준이며, 강점·주의 문장은 그 상태를 이해하기 쉽게 정리하는 <strong>보조 설명</strong>입니다.</p>
     </div></details>
 
     <details class="more" id="manual-news"><summary>⑮ 좋은 소식 / 중요 소식</summary><div>
-      <p>분석 카드의 <strong>📰 중요 소식</strong>은 해당 종목과 관련해 확인할 가치가 있는 주요 뉴스를 요약합니다. 항목에 따라 🟢 호재, 🔴 악재, ⚪ 중립처럼 기사 제목을 기준으로 간단한 방향 표시가 붙을 수 있습니다.</p>
-      <p>일정 관련 뉴스는 별도 일정 아이콘으로 표시될 수 있습니다. 뉴스 평가는 <strong>기사 제목과 수집된 정보에 기반한 참고 분류</strong>이며 실제 실적·주가 영향은 다르게 나타날 수 있으므로 원문과 공시 확인이 필요합니다.</p>
+      <p>분석 카드의 <strong>📰 중요 소식</strong>은 해당 종목과 관련해 확인할 가치가 있는 주요 뉴스를 정리합니다. 기사 제목과 수집된 요약 정보를 함께 참고해 🟢 호재, 🔴 악재, ⚪ 중립처럼 간단한 방향 표시가 붙을 수 있습니다.</p>
+      <p>유효한 요약 정보가 있으면 제목 아래에 짧은 내용이 함께 표시될 수 있으며, 각 뉴스의 <strong>🔗 기사 보기</strong>를 눌러 관련 기사를 바로 확인할 수 있습니다.</p>
+      <p>뉴스 평가는 <strong>수집된 제목·요약 정보 기반의 참고 분류</strong>이며 실제 실적·주가 영향은 다르게 나타날 수 있으므로 중요한 내용은 원문과 공시를 함께 확인하는 것이 좋습니다.</p>
     </div></details>
 
     <div class="notice good"><strong>예시 · 기술점수 78 · 매수우위 · 위험도 높음 · 신뢰도 높음</strong><br>기술적 우위는 비교적 강하고 분석 입력도 충분하지만, 가격 변동이나 과열 위험 역시 높은 상태라는 뜻입니다. 즉 “바로 매수”가 아니라 <strong>우호적인 기술 구조와 높은 위험이 동시에 존재하는 상태</strong>로 읽는 것이 맞습니다.</div>
@@ -248,7 +259,7 @@
     <p>AI STOCK BRIEF는 시장 데이터와 기술지표를 빠르게 정리해 사용자의 판단을 보조하는 정보 서비스입니다. 특정 종목의 상승·수익을 보장하거나 매수·매도 주문을 지시하지 않습니다. 기술신호와 전략 방향을 포함한 모든 결과는 참고용 보조지표이며, 최종 투자 판단과 주문 결정은 사용자가 직접 수행해야 합니다.</p>
   </section>
 
-  <footer class="footer"><strong>AI STOCK BRIEF v2.7.1</strong><br>Quantitative Market Analysis · Validation · Automation</footer>
+  <footer class="footer"><strong>AI STOCK BRIEF v2.7.2</strong><br>Quantitative Market Analysis · Validation · Automation</footer>
 </div>
 <script async src="https://tally.so/widgets/embed.js"></script>
 </body>
